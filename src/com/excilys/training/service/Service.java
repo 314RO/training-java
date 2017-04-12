@@ -9,8 +9,8 @@ import com.excilys.training.ui.*;
 
 public class Service {
 	
-	private	DAO<Computer> computerDao = new ComputerDAO(SQLConnection.getInstance());
-	private	DAO<Company> companyDao = new CompanyDAO(SQLConnection.getInstance());
+	private	DAO<Computer> computerDao = new ComputerDAOImp(SQLConnection.getInstance());
+	private	DAO<Company> companyDao = new CompanyDAOImp(SQLConnection.getInstance());
 	private UserInterface ui = new UserInterface();
 	private static int mode;
 	
@@ -35,6 +35,12 @@ public class Service {
 		
 		case 4 : Computer new_computer = ui.askComputer();
 		computerDao.create(new_computer);
+		break;
+		
+		case 5 : 
+		break;
+		
+		case 6 :  
 		break;
 		
 		
