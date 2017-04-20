@@ -2,6 +2,7 @@ package com.excilys.training.persistence;
 
 import java.util.ArrayList;
 
+import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Computer;
 
 public interface ComputerDAO {
@@ -17,8 +18,9 @@ public interface ComputerDAO {
      * Trouver un élément.
      * @param  id (long)
      * @return Computer
+     * @throws NullComputerException 
      */
-    Computer getById(long id);
+    Computer getById(long id) throws NullComputerException;
 
     /**
      * Renvoie une page de la bdd.

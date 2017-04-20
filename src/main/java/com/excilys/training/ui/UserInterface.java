@@ -7,6 +7,11 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.excilys.training.exceptions.ChronologicalException;
+import com.excilys.training.exceptions.CustomDateException;
+import com.excilys.training.exceptions.NegativeValueException;
+import com.excilys.training.exceptions.NoNameException;
+import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
@@ -28,94 +33,141 @@ public class UserInterface {
      * Demande de l'action à réaliser.
      */
     public void menu() {
-        LOGGER.info("Faites votre choix\n1) List computers\n2) List companies\n3) Show computer details\n4) Create computers\n5) Update computer \n6) Delete computer");
-
+        
+        System.out.println("Faites votre choix\n1) List computers\n2) List companies\n3) Show computer details\n4) Create computer\n5) Update computer \n6) Delete computer \n7) Exit");
+        
         while (!SC.hasNextInt()) {
+            System.out.println("Vous devez entrer un entier");
             SC.next();
         }
         int answer = SC.nextInt();
+        SC.nextLine();
 
         switch (answer) {
         case 1:
-            ArrayList<Computer> arrayComputer = computerServiceImp.fetchPage(askPage());
-            displayArray(arrayComputer);
+            ArrayList<Computer> arrayComputer;
+            try {
+                arrayComputer = computerServiceImp.fetchPage((int)askPosValue("page"));
+                displayArray(arrayComputer);
+            } catch (NegativeValueException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée");
+            }
+            
             break;
 
         case 2:
-            ArrayList<Company> arrayCompany = companyServiceImp.fetchPage(askPage());
-            displayArray(arrayCompany);
+            ArrayList<Company> arrayCompany;
+            try {
+                arrayCompany = companyServiceImp.fetchPage((int)askPosValue("page"));
+                displayArray(arrayCompany);
+            } catch (NegativeValueException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée");
+            }
+            
             break;
 
         case 3:
-            Computer computer = computerServiceImp.getById(askIndex());
-            LOGGER.info(computer.toString());
+            Computer computer;
+            try {
+                computer = computerServiceImp.getById(askPosValue("computer"));
+                System.out.println(computer.toString());
+            } catch (NegativeValueException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée");
+            }
             break;
-
         case 4:
-            computerServiceImp.add(askComputer());
+            try {
+                computerServiceImp.add(askComputer());
+            } catch (NullComputerException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée");
+            } catch (ChronologicalException e) {
+                LOGGER.debug("Erreur dans les dates");
+            } catch (CustomDateException e) {
+                LOGGER.debug("Format de date incorrect");
+            }
             break;
 
         case 5:
-            computerServiceImp.update(askIndex(), askComputer());
+            try {
+                computerServiceImp.update(askPosValue("computer"), askComputer());
+            } catch (NullComputerException e) {
+                LOGGER.debug("Update computer avec nom incorrect");
+            } catch (NegativeValueException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée");
+            } catch (ChronologicalException e) {
+                LOGGER.debug("Erreur dans les dates");
+            } catch (CustomDateException e) {
+                LOGGER.debug("Format de date incorrect");
+            }
             break;
 
         case 6:
-            computerServiceImp.delete(askIndex());
+            try {
+                computerServiceImp.delete(askPosValue("computer"));
+            } catch (NegativeValueException e) {
+                LOGGER.debug("Valeur négative ou nulle demandée"); 
+            }
+            break;
+        
+        case 7:
             break;
 
         default :
-            LOGGER.info("Commande invalide");
+            System.out.println("Commande invalide");
         }
     }
 
     /**
      * Demande d'un index (ordinateur ou compagnie).
      * @return long
+     * @throws NegativeValueException 
      */
-    public long askIndex() {
+    public long askPosValue(String name) throws NegativeValueException {
 
-        LOGGER.info("Index du computer?");
+        System.out.println("Index "+name+ " ?  (>0)");
+        while (!SC.hasNextInt()) {
+            System.out.println("Vous devez entrer un entier");
+            SC.next();
+        }
         int answer = SC.nextInt();
         SC.nextLine();
         if (answer > 0) {
             return (long) answer;
         } else {
-            return 0L;
+            throw new NegativeValueException();
         }
     }
 
-    /**
-     * Demande de la page à afficher.
-     * @return int
-     */
-    public int askPage() {
-
-        LOGGER.info("numéro de page?  (>0)");
-        int answer = SC.nextInt();
-        if (answer > 0) {
-            return answer;
-        } else {
-            return 0;
-        }
-    }
 
     /**
      * Demande d'un ordinateur, complet ou non.
      * @return Computer
+     * @throws NullComputerException 
+     * @throws ChronologicalException 
      */
-    public Computer askComputer() {
-        LOGGER.info("Computer data : \nname");
+    public Computer askComputer() throws NullComputerException, ChronologicalException,CustomDateException {
+        System.out.println("Computer data : \nname");
         String name = SC.nextLine();
-        LOGGER.info("Computer data : \nIntroduced");
+        System.out.println("Computer data : \nIntroduced");
+        // nouvelle version
         String intro = SC.nextLine();
-        LocalDate introduced = (!intro.equals("")) ? LocalDate.parse(intro) : null;
-        LOGGER.info("Computer data : \nDiscontinued");
+        intro = (!intro.equals("")) ? intro : null;
+        System.out.println("Computer data : \nDiscontinued");
+        // ancienne version
         String disc = SC.nextLine();
-        LocalDate discontinued = (!disc.equals("")) ? LocalDate.parse(disc) : null;
-        LOGGER.info("Computer data : \nidCompany");
-        long idCompany = SC.nextInt();
-        return new Computer.Builder(name).introduced(introduced).discontinued(discontinued)
-                .company(companyServiceImp.getById(idCompany)).build();
+        disc= (!disc.equals("")) ? disc : null;
+        System.out.println("Computer data : \nidCompany");
+        String id = SC.nextLine();
+        long idCompany = (!id.equals("")) ? Long.parseLong(id) : 0;
+        try {
+            return new Computer.Builder(name).introduced(intro).discontinued(disc)
+                    .company(companyServiceImp.getById(idCompany)).build();
+        } catch (NoNameException e) {
+            
+            throw new NullComputerException();
+        } catch (ChronologicalException | CustomDateException e) {
+            throw e;
+        }
 
     }
 
@@ -125,7 +177,7 @@ public class UserInterface {
      */
     public void displayArray(ArrayList results) {
         for (int i = 0; i < results.size(); i++) {
-            LOGGER.info(results.get(i).toString());
+            System.out.println(results.get(i));
         }
     }
 }

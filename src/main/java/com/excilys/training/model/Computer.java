@@ -1,6 +1,12 @@
 package com.excilys.training.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import com.excilys.training.exceptions.ChronologicalException;
+import com.excilys.training.exceptions.CustomDateException;
+import com.excilys.training.exceptions.NoNameException;
 
 public class Computer {
     private long id;
@@ -35,8 +41,13 @@ public class Computer {
          * Constructeur du Builder.
          * @param name (argument obligatoire)
          */
-        public Builder(String name) {
-            this.name = name;
+        public Builder(String name) throws NoNameException {
+            if (name==null || name.length()<2){
+                throw new NoNameException();
+            }
+            else {
+                this.name = name;
+            }
         }
 
         /**
@@ -53,20 +64,54 @@ public class Computer {
          * Ajout de introduced au Builder.
          * @param  introduced (LocalDate)
          * @return this
+         * @throws CustomDateException 
          */
-        public Builder introduced(LocalDate introduced) {
-            this.introduced = introduced;
-            return this;
-
+        public Builder introduced(String introduced) throws CustomDateException {
+            LocalDate date = null ;
+            try {
+                if (introduced!=null){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                date = LocalDate.parse(introduced, formatter);
+                }
+                
+                this.introduced = date;
+                return this;
+            }
+            catch (DateTimeParseException exc) {
+                throw new CustomDateException();      // Pour renvoyer un message personnalisé.
+            }
         }
 
         /**
          * Ajout de introduced au Builder.
          * @param  discontinued (LocalDate)
          * @return this
+         * @throws ChronologicalException 
+         * @throws CustomDateException 
          */
-        public Builder discontinued(LocalDate discontinued) {
-            this.discontinued = discontinued;
+        public Builder discontinued(String discontinued) throws ChronologicalException, CustomDateException {
+            LocalDate date = null ;
+            try {
+                if (discontinued!=null){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                date = LocalDate.parse(discontinued, formatter);
+                }
+            }
+                catch (DateTimeParseException exc) {
+                    throw new CustomDateException();      // Pour renvoyer un message personnalisé.
+                }
+                
+            if (this.introduced!=null && date!=null) {
+                if (this.introduced.isBefore(date)) {
+                    this.discontinued = date;
+                }
+                else {
+                    throw new ChronologicalException();
+                }
+            }
+            else {
+                this.discontinued = date;
+            }
             return this;
 
         }
@@ -99,27 +144,11 @@ public class Computer {
     }
 
     /**
-     * setter.
-     * @param id (long)
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
      * getter.
      * @return name
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * setter.
-     * @param name (String)
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -131,14 +160,6 @@ public class Computer {
     }
 
     /**
-     * setter.
-     * @param introduced (LocalDate)
-     */
-    public void setIntroduced(LocalDate introduced) {
-        this.introduced = introduced;
-    }
-
-    /**
      * getter.
      * @return discontinued
      */
@@ -147,27 +168,11 @@ public class Computer {
     }
 
     /**
-     * setter.
-     * @param discontinued (LocalDate)
-     */
-    public void setDiscontinued(LocalDate discontinued) {
-        this.discontinued = discontinued;
-    }
-
-    /**
      * getter.
      * @return company
      */
     public Company getCompany() {
         return company;
-    }
-
-    /**
-     * setter.
-     * @param company (Company)
-     */
-    public void setCompanyId(Company company) {
-        this.company = company;
     }
 
     /**

@@ -64,10 +64,8 @@ public class CompanyDAOImp implements CompanyDAO {
             if (result.first()) {
                 return new Company.Builder(result.getString("name")).id(id).build();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new Company.Builder("null").id(-1).build();
+            else {return new Company.Builder(null).build();}
+        } catch (SQLException e) { return new Company.Builder(null).build();}
     }
 
 }

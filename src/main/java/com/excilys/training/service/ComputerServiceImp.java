@@ -1,6 +1,8 @@
 package com.excilys.training.service;
 
 import java.util.ArrayList;
+
+import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.ComputerDAOImp;
 
@@ -25,7 +27,13 @@ public class ComputerServiceImp implements ComputerService {
      * @return Computer
      */
     public Computer getById(long id) {
-        Computer computer = computerDAOImp.getById(id);
+        Computer computer=null;
+        try {
+            computer = computerDAOImp.getById(id);
+        } catch (NullComputerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return computer;
     }
 

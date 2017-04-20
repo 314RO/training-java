@@ -1,4 +1,4 @@
-package com.excilys.training.ui;
+package com.excilys.training.exceptions;
 
 public class UIException extends Exception {
 
