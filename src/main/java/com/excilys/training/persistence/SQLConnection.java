@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
 public enum SQLConnection {
     INSTANCE;
 
@@ -31,8 +32,12 @@ public enum SQLConnection {
      */
     public static Connection getInstance() {
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection(url, user, passwd);
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     return connect;

@@ -12,6 +12,7 @@ public class CompanyDAOImp implements CompanyDAO {
     private static final int ITEM_PER_PAGE = 10;
     private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT " + ITEM_PER_PAGE + " OFFSET ? ";
     private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?";
+    private static final String NAME_QUERY = "SELECT * FROM computer WHERE name = ?";
     private Connection connect = SQLConnection.getInstance();
 
     /**
@@ -67,5 +68,19 @@ public class CompanyDAOImp implements CompanyDAO {
             else {return new Company.Builder(null).build();}
         } catch (SQLException e) { return new Company.Builder(null).build();}
     }
+    
+    public Company getByName(String name) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
+            preparedStatement.setString(1, name);
+            ResultSet result = preparedStatement.executeQuery();
+
+            if (result.first()) {
+                return new Company.Builder(name).id(result.getLong("id")).build();
+            }
+            else {return new Company.Builder(null).build();}
+        } catch (SQLException e) { return new Company.Builder(null).build();}
+    }
+    
 
 }

@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import org.mockito.internal.matchers.Null;
 
 import com.excilys.training.exceptions.ChronologicalException;
 import com.excilys.training.exceptions.CustomDateException;

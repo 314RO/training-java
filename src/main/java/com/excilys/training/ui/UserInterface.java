@@ -1,6 +1,5 @@
 package com.excilys.training.ui;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,8 +31,7 @@ public class UserInterface {
     /**
      * Demande de l'action à réaliser.
      */
-    public void menu() {
-        
+    private void menu() {
         System.out.println("Faites votre choix\n1) List computers\n2) List companies\n3) Show computer details\n4) Create computer\n5) Update computer \n6) Delete computer \n7) Exit");
         
         while (!SC.hasNextInt()) {
