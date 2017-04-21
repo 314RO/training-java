@@ -31,7 +31,6 @@ public class ComputerServiceImp implements ComputerService {
         try {
             computer = computerDAOImp.getById(id);
         } catch (NullComputerException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return computer;
@@ -73,8 +72,14 @@ public class ComputerServiceImp implements ComputerService {
      * @param  page (int)
      * @return ArrayList <Computer>
      */
-    public ArrayList<Computer> fetchPage(int page) {
-        ArrayList<Computer> computerList = computerDAOImp.fetchPage(page);
+    public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
+        ArrayList<Computer> computerList = computerDAOImp.fetchPage(page,itemPerPage);
         return computerList;
     }
+    
+    public long getCount(){
+        return computerDAOImp.getCount();
+    }
+
+    
 }

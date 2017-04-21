@@ -1,4 +1,4 @@
-package com.excilys.training.model;
+package com.excilys.training.DTO;
 
 public class CompanyDTO {
     

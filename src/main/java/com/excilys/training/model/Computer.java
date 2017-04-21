@@ -41,16 +41,10 @@ public class Computer {
          * Constructeur du Builder.
          * @param name (argument obligatoire)
          */
-        public Builder(String name) throws NoNameException {
-            if (name==null || name.length()<2){
-                throw new NoNameException();
+        public Builder(String name) {
+            this.name = name;
             }
-            else {
-                this.name = name;
-            }
-        }
-
-        /**
+         /**
          * Ajout d'un id au Builder.
          * @param  id (long)
          * @return this
@@ -66,54 +60,20 @@ public class Computer {
          * @return this
          * @throws CustomDateException 
          */
-        public Builder introduced(String introduced) throws CustomDateException {
-            LocalDate date = null ;
-            try {
-                if (introduced!=null){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                date = LocalDate.parse(introduced, formatter);
-                }
-                
-                this.introduced = date;
+        public Builder introduced(LocalDate introduced) {
+                this.introduced = introduced;
                 return this;
             }
-            catch (DateTimeParseException exc) {
-                throw new CustomDateException();      // Pour renvoyer un message personnalisé.
-            }
-        }
+            
 
         /**
          * Ajout de introduced au Builder.
          * @param  discontinued (LocalDate)
-         * @return this
-         * @throws ChronologicalException 
-         * @throws CustomDateException 
+         * @return this 
          */
-        public Builder discontinued(String discontinued) throws ChronologicalException, CustomDateException {
-            LocalDate date = null ;
-            try {
-                if (discontinued!=null){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                date = LocalDate.parse(discontinued, formatter);
-                }
-            }
-                catch (DateTimeParseException exc) {
-                    throw new CustomDateException();      // Pour renvoyer un message personnalisé.
-                }
-                
-            if (this.introduced!=null && date!=null) {
-                if (this.introduced.isBefore(date)) {
-                    this.discontinued = date;
-                }
-                else {
-                    throw new ChronologicalException();
-                }
-            }
-            else {
-                this.discontinued = date;
-            }
-            return this;
-
+        public Builder discontinued(LocalDate discontinued) {
+           this.discontinued = discontinued;
+           return this;
         }
 
         /**

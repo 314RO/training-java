@@ -1,5 +1,6 @@
 package com.excilys.training.ui;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,37 +16,36 @@ import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
 import com.excilys.training.service.ComputerServiceImp;
+import com.excilys.training.validators.ValidatorCLI;
 
 public class UserInterface {
     private CompanyServiceImp companyServiceImp = new CompanyServiceImp();
     private ComputerServiceImp computerServiceImp = new ComputerServiceImp();
     private static final Logger LOGGER = LoggerFactory.getLogger(UserInterface.class);
     private static final Scanner SC = new Scanner(System.in);
+    
 
     /**
      * Constructeur par défaut de la classe.
      */
-    public UserInterface() {
-        }
+    public UserInterface() {}
 
     /**
      * Demande de l'action à réaliser.
      */
-    private void menu() {
-        System.out.println("Faites votre choix\n1) List computers\n2) List companies\n3) Show computer details\n4) Create computer\n5) Update computer \n6) Delete computer \n7) Exit");
+    public void menu() {
         
-        while (!SC.hasNextInt()) {
-            System.out.println("Vous devez entrer un entier");
-            SC.next();
+        int choice=0;
+        try {
+            choice = (int) askPosIntValue("Faites votre choix\n1) List computers\n2) List companies\n3) Show computer details\n4) Create computer\n5) Update computer \n6) Delete computer \n7) Exit");
+        } catch (NegativeValueException e) {
+            LOGGER.debug("Valeur négative ou nulle demandée");
         }
-        int answer = SC.nextInt();
-        SC.nextLine();
-
-        switch (answer) {
+        switch (choice) {
         case 1:
             ArrayList<Computer> arrayComputer;
             try {
-                arrayComputer = computerServiceImp.fetchPage((int)askPosValue("page"));
+                arrayComputer = computerServiceImp.fetchPage((int)askPosIntValue("page"),10);
                 displayArray(arrayComputer);
             } catch (NegativeValueException e) {
                 LOGGER.debug("Valeur négative ou nulle demandée");
@@ -56,7 +56,7 @@ public class UserInterface {
         case 2:
             ArrayList<Company> arrayCompany;
             try {
-                arrayCompany = companyServiceImp.fetchPage((int)askPosValue("page"));
+                arrayCompany = companyServiceImp.fetchPage((int)askPosIntValue("page"));
                 displayArray(arrayCompany);
             } catch (NegativeValueException e) {
                 LOGGER.debug("Valeur négative ou nulle demandée");
@@ -67,7 +67,7 @@ public class UserInterface {
         case 3:
             Computer computer;
             try {
-                computer = computerServiceImp.getById(askPosValue("computer"));
+                computer = computerServiceImp.getById(askPosIntValue("computer"));
                 System.out.println(computer.toString());
             } catch (NegativeValueException e) {
                 LOGGER.debug("Valeur négative ou nulle demandée");
@@ -87,7 +87,7 @@ public class UserInterface {
 
         case 5:
             try {
-                computerServiceImp.update(askPosValue("computer"), askComputer());
+                computerServiceImp.update(askPosIntValue("computer"), askComputer());
             } catch (NullComputerException e) {
                 LOGGER.debug("Update computer avec nom incorrect");
             } catch (NegativeValueException e) {
@@ -101,7 +101,7 @@ public class UserInterface {
 
         case 6:
             try {
-                computerServiceImp.delete(askPosValue("computer"));
+                computerServiceImp.delete(askPosIntValue("computer"));
             } catch (NegativeValueException e) {
                 LOGGER.debug("Valeur négative ou nulle demandée"); 
             }
@@ -120,9 +120,9 @@ public class UserInterface {
      * @return long
      * @throws NegativeValueException 
      */
-    public long askPosValue(String name) throws NegativeValueException {
+    public long askPosIntValue(String context) throws NegativeValueException {
 
-        System.out.println("Index "+name+ " ?  (>0)");
+        System.out.println(context+"  (>0)");
         while (!SC.hasNextInt()) {
             System.out.println("Vous devez entrer un entier");
             SC.next();
@@ -144,22 +144,19 @@ public class UserInterface {
      * @throws ChronologicalException 
      */
     public Computer askComputer() throws NullComputerException, ChronologicalException,CustomDateException {
+        try{
         System.out.println("Computer data : \nname");
-        String name = SC.nextLine();
+        String name = ValidatorCLI.validName(SC.nextLine());
         System.out.println("Computer data : \nIntroduced");
-        // nouvelle version
-        String intro = SC.nextLine();
-        intro = (!intro.equals("")) ? intro : null;
+        LocalDate introduced = ValidatorCLI.validIntroduced(SC.nextLine());
         System.out.println("Computer data : \nDiscontinued");
-        // ancienne version
-        String disc = SC.nextLine();
-        disc= (!disc.equals("")) ? disc : null;
+        LocalDate discontinued = ValidatorCLI.validDiscontinued(SC.nextLine(),introduced);
         System.out.println("Computer data : \nidCompany");
         String id = SC.nextLine();
         long idCompany = (!id.equals("")) ? Long.parseLong(id) : 0;
-        try {
-            return new Computer.Builder(name).introduced(intro).discontinued(disc)
+        return new Computer.Builder(name).introduced(introduced).discontinued(discontinued)
                     .company(companyServiceImp.getById(idCompany)).build();
+        
         } catch (NoNameException e) {
             
             throw new NullComputerException();

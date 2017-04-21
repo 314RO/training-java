@@ -8,9 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.excilys.training.exceptions.ChronologicalException;
-import com.excilys.training.exceptions.CustomDateException;
-import com.excilys.training.exceptions.NoNameException;
 import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Computer;
 
@@ -21,12 +18,11 @@ public class ComputerDAOImp implements ComputerDAO {
     private Connection connect = SQLConnection.getInstance();
     private static final String ADD_QUERY = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM computer WHERE id =?";
-    private static final int ITEM_PER_PAGE = 10;
-    private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT " + ITEM_PER_PAGE + " OFFSET ? ";
+    private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ";
     private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?";
     private static final String NAME_QUERY = "SELECT * FROM computer WHERE name = ?";
     private static final String UPDATE_QUERY = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id=? WHERE id = ?";
-
+    private static final String COUNT_QUERY = "SELECT COUNT(*) FROM computer";
     /**
      * Constructeur par défaut de la classe.
      */
@@ -106,26 +102,24 @@ public class ComputerDAOImp implements ComputerDAO {
      * @param  page (int)
      * @return ArrayList<Computer>
      */
-    public ArrayList<Computer> fetchPage(int page) {
+    public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
         try {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             PreparedStatement preparedStatement = connect.prepareStatement(FETCH_QUERY);
-            preparedStatement.setInt(1, page * ITEM_PER_PAGE);
+            preparedStatement.setInt(1, itemPerPage);
+            preparedStatement.setInt(2, (page-1) * itemPerPage);
             ResultSet result = preparedStatement.executeQuery();
 
             while (result.next()) {
                 long id = (long) result.getObject("id");
                 String name = result.getObject("name").toString();
-                LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString(3), formatter) : null;
-                String introduced = (intro!=null)? intro.format(formatter2) : null;                
+                LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString(3), formatter) : null;   
                 LocalDate disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString(4), formatter) : null;
-                String discontinued = (disc!=null)? disc.format(formatter2) : null;  
                 long indexCompany = (result.getObject("company_id") != null) ? (long) result.getObject(5) : 0;
-                arrayResults.add(new Computer.Builder(name).id(id).introduced(introduced).discontinued(discontinued)
+                arrayResults.add(new Computer.Builder(name).id(id).introduced(intro).discontinued(disc)
                         .company(companyDAOImp.getById(indexCompany)).build());
             }
 
@@ -150,29 +144,24 @@ public class ComputerDAOImp implements ComputerDAO {
         String name = null;
         LocalDate intro = null;
         LocalDate disc= null;
-        String introduced = null;
-        String discontinued = null;
         Computer computer = null;
         long indexCompany = 0;
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             PreparedStatement preparedStatement = connect.prepareStatement(ID_QUERY);
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
 
             if (result.first()) {
                 name = result.getObject("name").toString();
-                intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString(3), formatter) : null;
-                introduced = (intro!=null)? intro.format(formatter2) : null;                
+                intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString(3), formatter) : null;               
                 disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString(4), formatter) : null;
-                discontinued = (disc!=null)? disc.format(formatter2) : null;  
                 indexCompany = (result.getObject("company_id") != null) ? (long) result.getObject("company_id") : 0;
-                computer = new Computer.Builder(name).id(id).introduced(introduced).discontinued(discontinued).company(companyDAOImp.getById(indexCompany)).build();
+                computer = new Computer.Builder(name).id(id).introduced(intro).discontinued(disc).company(companyDAOImp.getById(indexCompany)).build();
             }
             
             return computer;
-        } catch (SQLException |ChronologicalException | CustomDateException |NoNameException e) {
+        } catch (SQLException e) {
             throw new NullComputerException();   
         } 
     }
@@ -187,19 +176,16 @@ public class ComputerDAOImp implements ComputerDAO {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
             preparedStatement.setString(1, name);
             ResultSet result = preparedStatement.executeQuery();
 
             while (result.next()) {
                 long id = (long) result.getObject("index");
-                LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString("introduced"), formatter) : null;
-                String introduced = (intro!=null)? intro.format(formatter2) : null;                
-                LocalDate disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString("discontinued"), formatter) : null;
-                String discontinued = (disc!=null)? disc.format(formatter2) : null;  
+                LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString("introduced"), formatter) : null;              
+                LocalDate disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString("discontinued"), formatter) : null; 
                 long indexCompany = (result.getObject("company_id") != null) ? (long) result.getObject("company_id") : 0;
-                arrayResults.add(new Computer.Builder(name).id(id).introduced(introduced).discontinued(discontinued).company(companyDAOImp.getById(indexCompany)).build());
+                arrayResults.add(new Computer.Builder(name).id(id).introduced(intro).discontinued(disc).company(companyDAOImp.getById(indexCompany)).build());
             }
 
             result.close();
@@ -212,4 +198,23 @@ public class ComputerDAOImp implements ComputerDAO {
         }
 
     }
+    
+    
+    
+    public long getCount(){
+       long count = 0l;
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement(COUNT_QUERY);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.first()) {
+                count =result.getLong(1);}
+            result.close();
+            preparedStatement.close();
+            return count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1l;
+        }
+    }
+    
 }

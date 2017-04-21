@@ -1,11 +1,12 @@
 package com.excilys.training.mappers;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.excilys.training.DTO.ComputerDTO;
 import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
-import com.excilys.training.model.ComputerDTO;
 import com.excilys.training.persistence.CompanyDAOImp;
 
 public class MapperComputer {
@@ -26,8 +27,8 @@ public class MapperComputer {
         public static Computer DTOToObj(ComputerDTO computerDTO) throws NullComputerException{
             Computer computer = null;
             String name = computerDTO.getName();
-            String introduced = (computerDTO.getIntroduced()!=null)? computerDTO.getIntroduced() : null;
-            String discontinued = (computerDTO.getDiscontinued ()!=null)? computerDTO.getDiscontinued() : null;
+            LocalDate introduced = (computerDTO.getIntroduced()!=null)? LocalDate.parse(computerDTO.getIntroduced(),formatter) : null;
+            LocalDate discontinued = (computerDTO.getDiscontinued ()!=null)? LocalDate.parse(computerDTO.getDiscontinued(),formatter) : null;
             Company company = new Company.Builder(computerDTO.getCompanyName()).id(companyDAO.getByName(computerDTO.getCompanyName()).getId()).build();
             try {
                 computer = new Computer.Builder(name).introduced(introduced).discontinued(discontinued).company(company).build();

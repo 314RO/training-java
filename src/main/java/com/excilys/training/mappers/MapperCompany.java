@@ -1,7 +1,7 @@
 package com.excilys.training.mappers;
 
+import com.excilys.training.DTO.CompanyDTO;
 import com.excilys.training.model.Company;
-import com.excilys.training.model.CompanyDTO;
 
 public class MapperCompany {
 

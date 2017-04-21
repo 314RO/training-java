@@ -46,6 +46,16 @@ public interface ComputerService {
      * @param  page (int)
      * @return ArrayList<Computer>
      */
-    ArrayList<Computer> fetchPage(int page);
+    ArrayList<Computer> fetchPage(int page, int itemPerPage);
+    
+    /**
+     * Obtenir le nombre d'ordinateur dans la bdd.
+     * @return int
+     */
+    long getCount();
+    
+    
+    
+ 
 
 }
