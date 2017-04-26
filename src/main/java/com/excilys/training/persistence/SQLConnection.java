@@ -1,7 +1,6 @@
 package com.excilys.training.persistence;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -14,18 +13,15 @@ import com.zaxxer.hikari.HikariDataSource;
 public enum SQLConnection {
     INSTANCE;
 
-    private static String url;
-    private static String user;
-    private static String passwd;
+    private String url;
+    private String user;
+    private String passwd;
     private static Connection connect;
     private DataSource dataSource;
     
-    static {
-        ResourceBundle rb = ResourceBundle.getBundle("connection");
-        url = rb.getString("url");
-        user = rb.getString("user");
-        passwd = rb.getString("passwd");
-    }
+   
+       
+    
     /**
      * Constructeur par défaut de la classe.
      */
@@ -36,11 +32,17 @@ public enum SQLConnection {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        ResourceBundle rb = ResourceBundle.getBundle("connection");
+        url = rb.getString("url");
+        user = rb.getString("user");
+        passwd = rb.getString("passwd");
+        
+        
         HikariConfig config = new HikariConfig();
         
-        config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/computer-database-db?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
-        config.setUsername("root");
-        config.setPassword("");
+        config.setJdbcUrl(url);
+        config.setUsername(user);
+        config.setPassword(passwd);
 
         config.setMaximumPoolSize(10);
         config.setAutoCommit(false);

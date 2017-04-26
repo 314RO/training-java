@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.training.DTO.ComputerDTO;
 import com.excilys.training.exceptions.NegativeValueException;
 import com.excilys.training.mappers.MapperComputer;
-import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
 import com.excilys.training.service.ComputerServiceImp;
@@ -29,7 +28,6 @@ public class WebUIMain extends HttpServlet {
 	private int itemPerPage=10;
 	private int page = 1;
 	 
-	//MapperComputer mapperComputer = new MapperComputer();
     /**
      * @see HttpServlet#HttpServlet()
      */

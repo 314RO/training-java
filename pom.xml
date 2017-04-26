@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.excilys.training</groupId>
 	<artifactId>ComputerDatabase</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.3.0-RELEASE</version>
 	<properties>
 		<logback.version>1.0.1</logback.version>
 		<javax.version>3.1.0</javax.version>
@@ -14,6 +14,7 @@
 		<logback.version>1.0.1</logback.version>
 		<hikari.version>2.6.1</hikari.version>
 		<selenium.version>2.3</selenium.version>
+		 <log4j.version>2.8.2</log4j.version>
 	</properties>
 
 
@@ -40,6 +41,32 @@
 	</reporting>
 
 	<dependencies>
+	
+	
+
+	 <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-slf4j-impl</artifactId>
+         <version>${log4j.version}</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-api</artifactId>
+         <version>${log4j.version}</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+         <version>${log4j.version}</version>
+         <scope>test</scope>
+      </dependency>
 
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
@@ -52,7 +79,6 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>${hikari.version}</version>
-			<scope>compile</scope>
 		</dependency>
 
 
@@ -83,14 +109,13 @@
 		</dependency>
 
 
-
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.7.10</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
 		</dependency>
 
-	
+
 	</dependencies>
 
 
