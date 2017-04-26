@@ -12,11 +12,20 @@ public interface CompanyService {
      */
     ArrayList<Company> fetchPage(int page);
 
+    
+    // missing javadoc
+    ArrayList<Company> fetchAll();
+    
+    
     /**
      * Trouver un élément.
      * @param  id (long)
      * @return Company
      */
     Company getById(long id);
+  
+    
+ // missing javadoc
+    Company getByName(String name);
 
 }

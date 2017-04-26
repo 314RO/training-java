@@ -21,8 +21,8 @@ import com.excilys.training.service.ComputerServiceImp;
 /**
  * Servlet implementation class WebUI
  */
-@WebServlet("/WebUI")
-public class WebUI extends HttpServlet {
+@WebServlet("/WebUIMain")
+public class WebUIMain extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// 1) On définit tous les attributs possibles qu'on peut récuperer par l'URL.
@@ -33,10 +33,9 @@ public class WebUI extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WebUI() {
+    public WebUIMain() {
         super();
         
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,6 +47,8 @@ public class WebUI extends HttpServlet {
 	    
 	    long count = computerServiceImp.getCount();
 	    request.setAttribute("count",count);
+	    
+	    request.setAttribute("pageNbr",(int)Math.ceil((double)count/itemPerPage));
 	    
 
 	    // 2) try catch sur chacun des atttributs pour s'assurer de leur validité.
@@ -82,14 +83,15 @@ public class WebUI extends HttpServlet {
 	    catch(NumberFormatException | NegativeValueException e){
 	        request.setAttribute("Erreur", 1);
 	    }
-	    finally{this.getServletContext().getRequestDispatcher( "/WEB-INF/views/dashboard.jsp" ).forward( request, response );}
+	    finally{
+	        request.setAttribute("page", page);
+	        this.getServletContext().getRequestDispatcher( "/WEB-INF/views/dashboard.jsp" ).forward( request, response );}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

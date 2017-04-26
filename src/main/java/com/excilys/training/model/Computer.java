@@ -1,12 +1,6 @@
 package com.excilys.training.model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-import com.excilys.training.exceptions.ChronologicalException;
-import com.excilys.training.exceptions.CustomDateException;
-import com.excilys.training.exceptions.NoNameException;
 
 public class Computer {
     private long id;

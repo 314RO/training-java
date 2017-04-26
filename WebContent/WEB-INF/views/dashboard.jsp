@@ -17,8 +17,8 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard.html"> Application -
-				Computer Database </a>
+			<a class="navbar-brand" href="WebUIMain"> Application - Computer
+				Database </a>
 		</div>
 	</header>
 
@@ -26,7 +26,11 @@
 		<div class="container">
 			<h1 id="homeTitle">
 				<c:out value="${count}" />
-				ordinateurs dans la bdd
+				ordinateurs dans la bdd et
+				<c:out value="${pageNbr}" />
+				pages et on est sur la page
+				<c:out value="${page}" />
+
 			</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
@@ -39,7 +43,7 @@
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer.html">Add
+					<a class="btn btn-success" id="addComputer" href="addComputer">Add
 						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
@@ -82,8 +86,9 @@
 								<tr>
 									<td class="editMode"><input type="checkbox" name="cb"
 										class="cb" value="0"></td>
-									<td><a href="editComputer.html" onclick=""><c:out
-												value="${computerDTO.name}" /></a></td>
+									<td><a href="editComputer?id=${computerDTO.id}" onclick="">
+											<c:out value="${computerDTO.name}" />
+									</a></td>
 									<td><c:out value="${computerDTO.introduced}" /></td>
 									<td><c:out value="${computerDTO.discontinued}" /></td>
 									<td><c:out value="${computerDTO.companyName}" /></td>
@@ -104,26 +109,50 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<ul class="pagination">
-				<li><a href="#" aria-label="Previous"> <span
-						aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li><a href="?page=1">1</a></li>
-				<li><a href="?page=2">2</a></li>
-				<li><a href="?page=3">3</a></li>
-				<li><a href="?page=4">4</a></li>
-				<li><a href="?page=5">5</a></li>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
+				<c:if test="${page gt 1}">
+
+					<li><a href="?page=${page-1 }" aria-label="Previous"> <span
+							aria-hidden="true">&laquo;</span>
+					</a></li>
+				</c:if>
+
+				<c:forEach var="i" begin="1" end="${pageNbr}">
+					<c:choose>
+						<c:when test="${page <= 3}">
+							<c:if test="${i <= 5}">
+								<li><a href="?page=${i}">${i}</a></li>
+
+							</c:if>
+
+						</c:when>
+						<c:when test="${page >= pageNbr-3}">
+							<c:if test="${i >= pageNbr-4}">
+								<li><a href="?page=${i}">${i}</a></li>
+
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${i>= page-2 && i <= page +2}">
+								<li><a href="?page=${i}">${i}</a></li>
+
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+
+				</c:forEach>
+				<c:if test="${page lt pageNbr}">
+					<li><a href="?page=${page+1 }" aria-label="Next"> <span
+							aria-hidden="true">&raquo;</span>
+					</a></li>
+				</c:if>
 			</ul>
 
 			<div class="btn-group btn-group-sm pull-right" role="group">
-
-				<button type="button" class="btn btn-default"
-					onClick="location.href='?itemPerPage=10'">10</button>
-				<button type="button" class="btn btn-default"
-					onClick="location.href='?itemPerPage=50'">50</button>
-				<button type="button" class="btn btn-default"
-					onClick="location.href='?itemPerPage=100'">100</button>
+				<a href="?itemPerPage=10" class="btn btn-default" type="submit"
+					onclick="location.reload()">10</a> <a href="?itemPerPage=50"
+					class="btn btn-default" type="submit" onclick="location.reload()">50</a>
+				<a href="?itemPerPage=100" class="btn btn-default" type="submit"
+					onclick="location.reload()">100</a>
 			</div>
 		</div>
 	</footer>

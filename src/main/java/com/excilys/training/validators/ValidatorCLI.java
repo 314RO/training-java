@@ -6,17 +6,15 @@ import java.time.format.DateTimeParseException;
 
 import com.excilys.training.exceptions.ChronologicalException;
 import com.excilys.training.exceptions.CustomDateException;
-import com.excilys.training.exceptions.NoNameException;
+import com.excilys.training.exceptions.NotNameException;
 
 public class ValidatorCLI {
 
     public ValidatorCLI() {}
 
-    
-    
-    public static String validName(String name) throws NoNameException{
+    public static String validName(String name) throws NotNameException{
         if (name==null || name.length()<2){
-            throw new NoNameException();
+            throw new NotNameException();
         }
         else {
             return name;
@@ -56,8 +54,6 @@ public class ValidatorCLI {
             }
         }
         return date;
-    }
-    
-    
+    } 
    
 }

@@ -8,8 +8,6 @@ import com.excilys.training.persistence.ComputerDAOImp;
 
 public class ComputerServiceImp implements ComputerService {
 
-    private ComputerDAOImp computerDAOImp = new ComputerDAOImp();
-
     /**
      * Ajoute l'ordinateur passé en argument à la base de données.
      * @param  obj (Computer)
@@ -17,6 +15,7 @@ public class ComputerServiceImp implements ComputerService {
      */
 
     public boolean add(Computer obj) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         return computerDAOImp.add(obj);
     }
 
@@ -27,6 +26,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return Computer
      */
     public Computer getById(long id) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         Computer computer=null;
         try {
             computer = computerDAOImp.getById(id);
@@ -43,6 +43,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return ArrayList<Computer>
      */
     public ArrayList<Computer> getByName(String name) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         return computerDAOImp.getByName(name);
     }
 
@@ -52,6 +53,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return true si réussi, false sinon
      */
     public boolean delete(long id) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         return computerDAOImp.delete(id);
     }
 
@@ -63,6 +65,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return true si réussi, false sinon
      */
     public boolean update(long index, Computer obj) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         return computerDAOImp.update(index, obj);
     }
 
@@ -73,13 +76,17 @@ public class ComputerServiceImp implements ComputerService {
      * @return ArrayList <Computer>
      */
     public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         ArrayList<Computer> computerList = computerDAOImp.fetchPage(page,itemPerPage);
         return computerList;
     }
     
+    /**
+     * Obtenir le nombre d'ordinateur dans la bdd.
+     * @return int
+     */
     public long getCount(){
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
         return computerDAOImp.getCount();
     }
-
-    
 }

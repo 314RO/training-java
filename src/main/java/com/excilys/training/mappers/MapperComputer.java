@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import com.excilys.training.DTO.ComputerDTO;
-import com.excilys.training.exceptions.NullComputerException;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.CompanyDAOImp;
@@ -17,6 +16,7 @@ public class MapperComputer {
         
         public static ComputerDTO ObjToDTO(Computer computer){
            ComputerDTO computerDTO = new ComputerDTO();
+           computerDTO.setId(computer.getId());
            computerDTO.setName(computer.getName());
            computerDTO.setIntroduced((computer.getIntroduced()!=null)?  computer.getIntroduced().format(formatter) : null);
            computerDTO.setDiscontinued((computer.getDiscontinued()!=null)?  computer.getDiscontinued().format(formatter) : null);
@@ -24,18 +24,17 @@ public class MapperComputer {
            
            return computerDTO; 
         }
-        public static Computer DTOToObj(ComputerDTO computerDTO) throws NullComputerException{
+        public static Computer DTOToObj(ComputerDTO computerDTO){
             Computer computer = null;
+            long id = computerDTO.getId();
             String name = computerDTO.getName();
-            LocalDate introduced = (computerDTO.getIntroduced()!=null)? LocalDate.parse(computerDTO.getIntroduced(),formatter) : null;
-            LocalDate discontinued = (computerDTO.getDiscontinued ()!=null)? LocalDate.parse(computerDTO.getDiscontinued(),formatter) : null;
+            LocalDate introduced = (computerDTO.getIntroduced()!=null && !computerDTO.getIntroduced().equals(""))? LocalDate.parse(computerDTO.getIntroduced(),formatter) : null;
+            LocalDate discontinued = (computerDTO.getDiscontinued ()!=null && !computerDTO.getDiscontinued().equals(""))? LocalDate.parse(computerDTO.getDiscontinued(),formatter) : null;
             Company company = new Company.Builder(computerDTO.getCompanyName()).id(companyDAO.getByName(computerDTO.getCompanyName()).getId()).build();
-            try {
-                computer = new Computer.Builder(name).introduced(introduced).discontinued(discontinued).company(company).build();
-                return computer;
-            } catch (Exception e) {
-             throw new NullComputerException();
-             }
+            
+            computer = new Computer.Builder(name).id(id).introduced(introduced).discontinued(discontinued).company(company).build();
+            return computer;
+           
          }
 }
   

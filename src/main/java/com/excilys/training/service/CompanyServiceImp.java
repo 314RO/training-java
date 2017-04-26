@@ -6,8 +6,6 @@ import com.excilys.training.persistence.CompanyDAOImp;
 
 public class CompanyServiceImp implements CompanyService {
 
-    private CompanyDAOImp companyDAOImp = new CompanyDAOImp();
-
     /**
      * Renvoie une page d'éléments de la base de données.
      * Le nombre d'éléments par page est défini dans les DAOs.
@@ -15,7 +13,15 @@ public class CompanyServiceImp implements CompanyService {
      * @return ArrayList <Company>
      */
     public ArrayList<Company> fetchPage(int page) {
+        CompanyDAOImp companyDAOImp = new CompanyDAOImp();
         ArrayList<Company> companyList = companyDAOImp.fetchPage(page);
+        return companyList;
+    }
+
+    // missing javadoc
+    public ArrayList<Company> fetchAll() {
+        CompanyDAOImp companyDAOImp = new CompanyDAOImp();
+        ArrayList<Company> companyList = companyDAOImp.fetchAll();
         return companyList;
     }
 
@@ -26,7 +32,16 @@ public class CompanyServiceImp implements CompanyService {
      * @return Company
      */
     public Company getById(long id) {
+        CompanyDAOImp companyDAOImp = new CompanyDAOImp();
         Company company = companyDAOImp.getById(id);
+        return company;
+    }
+    
+    
+    // missing javadoc
+    public Company getByName(String name) {
+        CompanyDAOImp companyDAOImp = new CompanyDAOImp();
+        Company company = companyDAOImp.getByName(name);
         return company;
     }
 }

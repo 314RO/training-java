@@ -15,12 +15,11 @@ import com.excilys.training.model.Computer;
 public class ComputerDAOImp implements ComputerDAO {
     
     private CompanyDAOImp companyDAOImp = new CompanyDAOImp();
-    private Connection connect = SQLConnection.getInstance();
     private static final String ADD_QUERY = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM computer WHERE id =?";
     private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ";
-    private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?";
-    private static final String NAME_QUERY = "SELECT * FROM computer WHERE name = ?";
+    private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?"+"%";
+    private static final String NAME_QUERY = "SELECT * FROM computer WHERE name LIKE ?";
     private static final String UPDATE_QUERY = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id=? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM computer";
     /**
@@ -35,7 +34,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean add(Computer obj) {
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
                        
             PreparedStatement preparedStatement = connect.prepareStatement(ADD_QUERY);
             preparedStatement.setString(1, obj.getName());
@@ -59,7 +58,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean delete(long id) {
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
             PreparedStatement preparedStatement = connect.prepareStatement(DELETE_QUERY);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -78,7 +77,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean update(long index, Computer obj) {
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
 
             PreparedStatement preparedStatement = connect.prepareStatement(UPDATE_QUERY);
             preparedStatement.setString(1, obj.getName());
@@ -104,7 +103,7 @@ public class ComputerDAOImp implements ComputerDAO {
      */
     public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
@@ -146,7 +145,7 @@ public class ComputerDAOImp implements ComputerDAO {
         LocalDate disc= null;
         Computer computer = null;
         long indexCompany = 0;
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
             PreparedStatement preparedStatement = connect.prepareStatement(ID_QUERY);
             preparedStatement.setLong(1, id);
@@ -174,7 +173,7 @@ public class ComputerDAOImp implements ComputerDAO {
     public ArrayList<Computer> getByName(String name) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
 
-        try {
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
             preparedStatement.setString(1, name);
@@ -203,7 +202,7 @@ public class ComputerDAOImp implements ComputerDAO {
     
     public long getCount(){
        long count = 0l;
-        try {
+        try (Connection connect = SQLConnection.INSTANCE.getInstance();){
             PreparedStatement preparedStatement = connect.prepareStatement(COUNT_QUERY);
             ResultSet result = preparedStatement.executeQuery();
             if (result.first()) {
