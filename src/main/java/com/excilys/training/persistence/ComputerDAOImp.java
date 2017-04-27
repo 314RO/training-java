@@ -18,6 +18,7 @@ public class ComputerDAOImp implements ComputerDAO {
     private static final String ADD_QUERY = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM computer WHERE id =?";
     private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ";
+    private static final String FETCH_ORDERED_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ORDER BY ? ?";
     private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?"+"%";
     private static final String NAME_QUERY = "SELECT * FROM computer WHERE name LIKE ?";
     private static final String UPDATE_QUERY = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id=? WHERE id = ?";
@@ -123,7 +124,7 @@ public class ComputerDAOImp implements ComputerDAO {
                 arrayResults.add(new Computer.Builder(name).id(id).introduced(intro).discontinued(disc)
                         .company(companyDAOImp.getById(indexCompany)).build());
             }
-
+            
             result.close();
             return arrayResults;
 
@@ -216,5 +217,49 @@ public class ComputerDAOImp implements ComputerDAO {
             return -1l;
         }
     }
+    
+    
+    public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String orderBy, String way) {
+        ArrayList<Computer> arrayResults = new ArrayList<Computer>();
+        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+            PreparedStatement preparedStatement = connect.prepareStatement(FETCH_QUERY);
+
+                ) {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            preparedStatement.setInt(1, itemPerPage);
+            preparedStatement.setInt(2, (page-1) * itemPerPage);
+            preparedStatement.setString(3, orderBy);
+            preparedStatement.setString(4, way);
+            ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                long id = (long) result.getObject("id");
+                String name = result.getObject("name").toString();
+                LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString(3), formatter) : null;   
+                LocalDate disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString(4), formatter) : null;
+                long indexCompany = (result.getObject("company_id") != null) ? (long) result.getObject(5) : 0;
+                arrayResults.add(new Computer.Builder(name).id(id).introduced(intro).discontinued(disc)
+                        .company(companyDAOImp.getById(indexCompany)).build());
+            }
+
+            result.close();
+            return arrayResults;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return arrayResults;
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

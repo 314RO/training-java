@@ -27,7 +27,9 @@ public class WebUIMain extends HttpServlet {
 	// 1) On définit tous les attributs possibles qu'on peut récuperer par l'URL.
 	private int itemPerPage=10;
 	private int page = 1;
-	 
+	private String search = "";
+	private String column = "";
+	private String order = "";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -52,6 +54,22 @@ public class WebUIMain extends HttpServlet {
 	    // 2) try catch sur chacun des atttributs pour s'assurer de leur validité.
 	    // On rappelle la jsp quelque soit la validité de l'attribut (message d'erreur)
 	    try{
+	        if (request.getParameter( "search" )!=null) {
+                search = request.getParameter( "search" );
+                System.out.println(search);
+                }
+	        if (request.getParameter( "column" )!=null) {
+                column = request.getParameter( "column" );
+                System.out.println(column);
+                }
+	        if (request.getParameter( "order" )!=null) {
+                order = request.getParameter( "order" );
+                System.out.println(order);
+                }
+	        
+	        
+	        
+	        
 	        if (request.getParameter( "page" )!=null) {
 	            if(Integer.parseInt(request.getParameter( "page" ))<1) {
 	                throw new NegativeValueException();

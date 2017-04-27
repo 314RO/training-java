@@ -32,6 +32,7 @@ public enum SQLConnection {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
         ResourceBundle rb = ResourceBundle.getBundle("connection");
         url = rb.getString("url");
         user = rb.getString("user");
@@ -44,8 +45,8 @@ public enum SQLConnection {
         config.setUsername(user);
         config.setPassword(passwd);
 
-        config.setMaximumPoolSize(10);
-        config.setAutoCommit(false);
+        config.setMaximumPoolSize(25);
+        config.setAutoCommit(true);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

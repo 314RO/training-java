@@ -33,7 +33,7 @@ public class addComputer extends HttpServlet {
         ComputerServiceImp computerServiceImp = new ComputerServiceImp();
         CompanyServiceImp companyServiceImp = new CompanyServiceImp();
         int id = 0;
-        System.out.println("1");
+        System.out.println("10");
         ArrayList<Company> companyList = new ArrayList<Company>();
         ArrayList<CompanyDTO> companyListDTO = new ArrayList<CompanyDTO>();
         companyList = companyServiceImp.fetchAll();
@@ -41,25 +41,26 @@ public class addComputer extends HttpServlet {
             companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
         }
         request.setAttribute("companyList", companyListDTO);
-        System.out.println("1");
+        System.out.println("2");
         ComputerDTO cdto = new ComputerDTO();
         Computer c = null;
         cdto.setId(id);
-        System.out.println("1");
+        System.out.println("3");
         cdto.setName((request.getParameter("computerName")));
         cdto.setIntroduced((request.getParameter("introduced")));
         cdto.setDiscontinued((request.getParameter("discontinued")));
         System.out.println(request.getParameter("companyId"));
-        System.out.println("1");
+        System.out.println("7");
         cdto.setCompanyName((request.getParameter("companyId") != null)
                 ? companyServiceImp.getById(Long.parseLong(request.getParameter("companyId"))).getName() : null);
-        System.out.println("1");
+        System.out.println("8");
         if (ValidatorWeb.validName(cdto.getName()) && ValidatorWeb.validIntroduced(cdto.getIntroduced())
                 && ValidatorWeb.validDiscontinued(cdto.getDiscontinued(), cdto.getIntroduced())) {
             c = MapperComputer.DTOToObj(cdto);
             computerServiceImp.add(c);
+            System.out.println("ajouté");
         }
-        System.out.println("1");
+        System.out.println("9");
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(request, response);
     }
 
