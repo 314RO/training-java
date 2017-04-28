@@ -18,6 +18,7 @@ public class ComputerDAOImp implements ComputerDAO {
     private static final String ADD_QUERY = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM computer WHERE id =?";
     private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ";
+    // fetch ordered query est incomplète. Cf l'implémentation de la requete plus bas.
     private static final String FETCH_ORDERED_QUERY = "SELECT * FROM computer ORDER BY ";
     private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?";
     private static final String NAME_QUERY = "SELECT * FROM computer WHERE name LIKE ?";

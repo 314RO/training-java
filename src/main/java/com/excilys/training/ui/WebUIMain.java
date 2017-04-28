@@ -122,8 +122,7 @@ public class WebUIMain extends HttpServlet {
                 for (int i = 0; i < computerList.size(); i++) {
                     System.out.println(computerList.get(i));
                 }
-                
-                
+                                
                 for (int i = 0; i < computerList.size(); i++) {
                     computerListDTO.add(MapperComputer.ObjToDTO(computerList.get(i)));
                 }
@@ -164,78 +163,7 @@ public class WebUIMain extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
-    
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+       
     
     
 
