@@ -81,6 +81,18 @@ public class ComputerServiceImp implements ComputerService {
         return computerList;
     }
     
+    
+    
+    
+    
+    
+    
+    public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b) {
+        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        ArrayList<Computer> computerList = computerDAOImp.fetchOrderedPage(page,itemPerPage,a,b);
+        return computerList;
+    }
+    
     /**
      * Obtenir le nombre d'ordinateur dans la bdd.
      * @return int

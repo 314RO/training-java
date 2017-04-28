@@ -57,7 +57,19 @@
 		<div class="container" style="margin-top: 10px;">
 			<c:choose>
 				<c:when test="${Erreur==1}">Tu me demandes de la merde</c:when>
+				<c:when test="${Erreur==2}">J'ai pas compris</c:when>
 				<c:otherwise>
+					<form action="">
+  						<input onChange="this.form.submit()" type="radio" value="none" name="column"> none  
+  						<input onChange="this.form.submit()" type="radio" value="name" name="column"> name   
+						<input onChange="this.form.submit()" type="radio" value="introduced" name="column"> introduced   
+						<input onChange="this.form.submit()" type="radio" value="discontinued" name="column"> discontinued   
+						<input onChange="this.form.submit()" type="radio" value="company" name="column"> company?   
+				    </form>
+				
+				
+				
+				
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>

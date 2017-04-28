@@ -18,8 +18,8 @@ public class ComputerDAOImp implements ComputerDAO {
     private static final String ADD_QUERY = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM computer WHERE id =?";
     private static final String FETCH_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ";
-    private static final String FETCH_ORDERED_QUERY = "SELECT * FROM computer LIMIT ? OFFSET ? ORDER BY ? ?";
-    private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?"+"%";
+    private static final String FETCH_ORDERED_QUERY = "SELECT * FROM computer ORDER BY ";
+    private static final String ID_QUERY = "SELECT * FROM computer WHERE id = ?";
     private static final String NAME_QUERY = "SELECT * FROM computer WHERE name LIKE ?";
     private static final String UPDATE_QUERY = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id=? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM computer";
@@ -38,8 +38,6 @@ public class ComputerDAOImp implements ComputerDAO {
         try(Connection connect = SQLConnection.INSTANCE.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(ADD_QUERY);
             ) {
-                       
-           
             preparedStatement.setString(1, obj.getName());
             preparedStatement.setObject(2, (obj.getIntroduced()!=null)? obj.getIntroduced().toString():null);
             preparedStatement.setObject(3, (obj.getDiscontinued()!=null)? obj.getDiscontinued().toString():null);
@@ -174,19 +172,20 @@ public class ComputerDAOImp implements ComputerDAO {
      */
     public ArrayList<Computer> getByName(String name) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
-        name = "%"+name+"%";
+        
         try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, name + "%");
             ResultSet result = preparedStatement.executeQuery();
-
+            
             while (result.next()) {
-                long id = (long) result.getObject("index");
+                long id = (long) result.getObject("id");
                 LocalDate intro = (result.getObject("introduced") != null) ? LocalDate.parse(result.getString("introduced"), formatter) : null;              
                 LocalDate disc = (result.getObject("discontinued") != null) ? LocalDate.parse(result.getString("discontinued"), formatter) : null; 
                 long indexCompany = (result.getObject("company_id") != null) ? (long) result.getObject("company_id") : 0;
-                arrayResults.add(new Computer.Builder(name).id(id).introduced(intro).discontinued(disc).company(companyDAOImp.getById(indexCompany)).build());
+                arrayResults.add(new Computer.Builder(result.getString("name")).id(id).introduced(intro).discontinued(disc).company(companyDAOImp.getById(indexCompany)).build());
+                
             }
 
             result.close();
@@ -222,17 +221,14 @@ public class ComputerDAOImp implements ComputerDAO {
     public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String orderBy, String way) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
         try(Connection connect = SQLConnection.INSTANCE.getInstance();
-            PreparedStatement preparedStatement = connect.prepareStatement(FETCH_QUERY);
+            PreparedStatement preparedStatement = connect.prepareStatement(FETCH_ORDERED_QUERY +orderBy+" "+ way +" LIMIT "+itemPerPage+" OFFSET "+(page-1) * itemPerPage);
 
                 ) {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-            preparedStatement.setInt(1, itemPerPage);
-            preparedStatement.setInt(2, (page-1) * itemPerPage);
-            preparedStatement.setString(3, orderBy);
-            preparedStatement.setString(4, way);
+            
+            System.out.println(preparedStatement);
             ResultSet result = preparedStatement.executeQuery();
-
             while (result.next()) {
                 long id = (long) result.getObject("id");
                 String name = result.getObject("name").toString();
