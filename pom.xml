@@ -45,8 +45,6 @@
 
 
 
-
-
 		</plugins>
 	</reporting>
 
@@ -131,12 +129,7 @@
 	<build>
 
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration></configuration>
-			</plugin>
+			
 
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -149,12 +142,15 @@
 					<password>admin</password>
 				</configuration>
 			</plugin>
+			
+			
+			
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
 				<version>${scala-maven-plugin.version}</version>
 			</plugin>
-
+<!-- 
 			<plugin>
 				<groupId>io.gatling</groupId>
 				<artifactId>gatling-maven-plugin</artifactId>
@@ -167,6 +163,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
