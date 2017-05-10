@@ -18,8 +18,8 @@
 		<log4j.version>2.8.2</log4j.version>
 		<version.tomcat>9.0.0.M17</version.tomcat>
 		<gatling.version>2.1.7</gatling.version>
-        <gatling-plugin.version>2.1.7</gatling-plugin.version>
-        <scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
+		<gatling-plugin.version>2.1.7</gatling-plugin.version>
+		<scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
 	</properties>
 
 
@@ -122,6 +122,13 @@
 			<version>5.1.41</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>2.20</version>
+		</dependency>
+
+
 
 	</dependencies>
 
@@ -129,7 +136,7 @@
 	<build>
 
 		<plugins>
-			
+
 
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -142,28 +149,17 @@
 					<password>admin</password>
 				</configuration>
 			</plugin>
-			
-			
-			
+
+
+
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
 				<version>${scala-maven-plugin.version}</version>
 			</plugin>
-<!-- 
-			<plugin>
-				<groupId>io.gatling</groupId>
-				<artifactId>gatling-maven-plugin</artifactId>
-				<version>${gatling-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>io.gatling</groupId> <artifactId>gatling-maven-plugin</artifactId> 
+				<version>${gatling-plugin.version}</version> <executions> <execution> <goals> 
+				<goal>execute</goal> </goals> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
