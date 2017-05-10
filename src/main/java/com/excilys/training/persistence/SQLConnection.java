@@ -32,7 +32,7 @@ public enum SQLConnection {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+        try {
         ResourceBundle rb = ResourceBundle.getBundle("connection");
         url = rb.getString("url");
         user = rb.getString("user");
@@ -52,6 +52,11 @@ public enum SQLConnection {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         
         dataSource = new HikariDataSource(config);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+    }
+        
         
     }
 
