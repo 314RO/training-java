@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5.5
 
 ADD ./1-SCHEMA.sql /docker-entrypoint-initdb.d/
 ADD ./2-PRIVILEGES.sql /docker-entrypoint-initdb.d/
