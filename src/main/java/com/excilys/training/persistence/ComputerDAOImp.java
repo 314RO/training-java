@@ -109,7 +109,7 @@ public class ComputerDAOImp implements ComputerDAO {
 
                 ) {
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             preparedStatement.setInt(1, itemPerPage);
             preparedStatement.setInt(2, (page-1) * itemPerPage);
             ResultSet result = preparedStatement.executeQuery();
@@ -147,7 +147,7 @@ public class ComputerDAOImp implements ComputerDAO {
         Computer computer = null;
         long indexCompany = 0;
         try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             PreparedStatement preparedStatement = connect.prepareStatement(ID_QUERY);
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
@@ -175,7 +175,7 @@ public class ComputerDAOImp implements ComputerDAO {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
         
         try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
             preparedStatement.setString(1, name + "%");
             ResultSet result = preparedStatement.executeQuery();
@@ -226,7 +226,7 @@ public class ComputerDAOImp implements ComputerDAO {
 
                 ) {
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             
             System.out.println(preparedStatement);
             ResultSet result = preparedStatement.executeQuery();

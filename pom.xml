@@ -5,34 +5,143 @@
 	<artifactId>training-java</artifactId>
 	<version>0.3.0-RELEASE</version>
 	<packaging>war</packaging>
-	<properties>
-		<logback.version>1.0.1</logback.version>
-		<javax.version>3.1.0</javax.version>
-		<jstl.version>1.2</jstl.version>
-		<junit.version>4.8.2</junit.version>
-		<mockito.version>1.9.5</mockito.version>
-		<slf4j.version>1.6.4</slf4j.version>
-		<logback.version>1.0.1</logback.version>
+		<properties>
+		<compiler.source>1.8</compiler.source>
+		<compiler.target>1.8</compiler.target>
+		<servlet-api.version>3.0.1</servlet-api.version>
+		<jsp-api.version>2.2</jsp-api.version>
+		<mysql.version>6.0.6</mysql.version>
+		<junit.version>4.11</junit.version>
+		<mockito.version>1.10.19</mockito.version>
 		<hikari.version>2.6.1</hikari.version>
-		<selenium.version>2.3</selenium.version>
-		<log4j.version>2.8.2</log4j.version>
-		<version.tomcat>9.0.0.M17</version.tomcat>
-		<gatling.version>2.1.7</gatling.version>
-		<gatling-plugin.version>2.1.7</gatling-plugin.version>
-		<scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
+		<servlet.version>3.0.1</servlet.version>
+		<jsp-api.version>2.2</jsp-api.version>
+		<selenium.version>3.4.0</selenium.version>
+		<gatlin.version>2.1.7</gatlin.version>
+		<gatlin-plugin.version>2.1.7</gatlin-plugin.version>
+		<scala-plugin.version>3.2.2</scala-plugin.version>
+		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+		<maven-checkstyle-plugin.configLocation>src/main/resources/checkstyle.xml</maven-checkstyle-plugin.configLocation>
+		<slf4j.version>1.8.0-alpha2</slf4j.version>
+		<logback.version>1.0.1</logback.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
+	
+	<dependencies>
+	
+	
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	
+	
+	
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>${hikari.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+			<scope>test</scope>
+		</dependency>
 
-	<reporting>
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>${gatlin.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>ComputerDatabase</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.17</version>
+				<version>${maven-checkstyle-plugin.version}</version>
 				<configuration>
-					<configLocation>checkstyle.xml</configLocation>
-					<suppressionsLocation>suppressions.xml</suppressionsLocation>
-					<suppressionsFileExpression>suppressions.file</suppressionsFileExpression>
+					<configLocation>${maven-checkstyle-plugin.configLocation}</configLocation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>${scala-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>io.gatling</groupId>
+				<artifactId>gatling-maven-plugin</artifactId>
+				<version>${gatlin-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<!-- Vérificaion de styles -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven-checkstyle-plugin.version}</version>
+				<configuration>
+					<configLocation>${maven-checkstyle-plugin.configLocation}</configLocation>
 				</configuration>
 				<reportSets>
 					<reportSet>
@@ -42,138 +151,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-
-
-
 		</plugins>
 	</reporting>
-
-	<dependencies>
-
-		<dependency>
-			<groupId>io.gatling.highcharts</groupId>
-			<artifactId>gatling-charts-highcharts</artifactId>
-			<version>${gatling.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		
-		
-		
-		<!-- <dependency> 
-		<groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
-			<version>${slf4j.version}</version> </dependency> -->
-		<!--
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j.version}</version>
-
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>${log4j.version}</version>
-
-		</dependency>
--->
-		<!-- <dependency> <groupId>org.codehaus.mojo</groupId> <artifactId>selenium-maven-plugin</artifactId> 
-			<version>${selenium.version}</version> <scope>test</scope> </dependency> -->
-
-
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>${hikari.version}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>${jstl.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-			<version>${junit.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.41</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-surefire-plugin</artifactId>
-			<version>2.20</version>
-		</dependency>
-
-
-
-	</dependencies>
-
-
-	<build>
-
-		<plugins>
-
-
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<server>myserver</server>
-					<username>admin</username>
-					<password>admin</password>
-				</configuration>
-			</plugin>
-
-
-
-			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>scala-maven-plugin</artifactId>
-				<version>${scala-maven-plugin.version}</version>
-			</plugin>
-			<!-- <plugin> <groupId>io.gatling</groupId> <artifactId>gatling-maven-plugin</artifactId> 
-				<version>${gatling-plugin.version}</version> <executions> <execution> <goals> 
-				<goal>execute</goal> </goals> </execution> </executions> </plugin> -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
