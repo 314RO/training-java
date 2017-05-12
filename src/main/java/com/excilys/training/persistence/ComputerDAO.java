@@ -2,7 +2,7 @@ package com.excilys.training.persistence;
 
 import java.util.ArrayList;
 
-import com.excilys.training.exceptions.NullComputerException;
+import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 
 public interface ComputerDAO {

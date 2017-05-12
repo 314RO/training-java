@@ -1,12 +1,12 @@
-package com.excilys.training.validators;
+package com.excilys.training.validator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import com.excilys.training.exceptions.ChronologicalException;
-import com.excilys.training.exceptions.CustomDateException;
-import com.excilys.training.exceptions.NotNameException;
+import com.excilys.training.exception.ChronologicalException;
+import com.excilys.training.exception.CustomDateException;
+import com.excilys.training.exception.NotNameException;
 
 public class ValidatorCLI {
 

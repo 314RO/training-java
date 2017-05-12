@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.training.DTO.ComputerDTO;
-import com.excilys.training.exceptions.NegativeValueException;
-import com.excilys.training.mappers.MapperComputer;
+import com.excilys.training.dto.ComputerDTO;
+import com.excilys.training.exception.NegativeValueException;
+import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
 import com.excilys.training.service.ComputerServiceImp;

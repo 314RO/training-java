@@ -1,4 +1,4 @@
-package com.excilys.training.DTO;
+package com.excilys.training.dto;
 
 public class ComputerDTO {
     private long id;

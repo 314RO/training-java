@@ -4,16 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.excilys.training.exceptions.ChronologicalException;
-import com.excilys.training.exceptions.CustomDateException;
-import com.excilys.training.exceptions.NegativeValueException;
-import com.excilys.training.exceptions.NotNameException;
-import com.excilys.training.exceptions.NullComputerException;
+import com.excilys.training.exception.ChronologicalException;
+import com.excilys.training.exception.CustomDateException;
+import com.excilys.training.exception.NegativeValueException;
+import com.excilys.training.exception.NotNameException;
+import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
 import com.excilys.training.service.ComputerServiceImp;
-import com.excilys.training.validators.ValidatorCLI;
+import com.excilys.training.validator.ValidatorCLI;
 
 public class UserInterface {
     private CompanyServiceImp companyServiceImp = new CompanyServiceImp();

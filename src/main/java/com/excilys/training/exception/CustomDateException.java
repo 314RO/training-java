@@ -1,4 +1,4 @@
-package com.excilys.training.exceptions;
+package com.excilys.training.exception;
 
 public class CustomDateException extends Exception {
 

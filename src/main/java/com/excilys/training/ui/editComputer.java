@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.training.DTO.CompanyDTO;
-import com.excilys.training.DTO.ComputerDTO;
-import com.excilys.training.exceptions.NegativeValueException;
-import com.excilys.training.mappers.MapperCompany;
-import com.excilys.training.mappers.MapperComputer;
+import com.excilys.training.dto.CompanyDTO;
+import com.excilys.training.dto.ComputerDTO;
+import com.excilys.training.exception.NegativeValueException;
+import com.excilys.training.mapper.MapperCompany;
+import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyServiceImp;
 import com.excilys.training.service.ComputerServiceImp;
-import com.excilys.training.validators.ValidatorWeb;
+import com.excilys.training.validator.ValidatorWeb;
 
 @WebServlet("/editComputer")
 public class editComputer extends HttpServlet {

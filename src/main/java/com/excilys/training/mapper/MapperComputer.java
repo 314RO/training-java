@@ -1,9 +1,9 @@
-package com.excilys.training.mappers;
+package com.excilys.training.mapper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.excilys.training.DTO.ComputerDTO;
+import com.excilys.training.dto.ComputerDTO;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.CompanyDAOImp;

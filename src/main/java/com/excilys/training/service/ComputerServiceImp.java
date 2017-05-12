@@ -2,7 +2,7 @@ package com.excilys.training.service;
 
 import java.util.ArrayList;
 
-import com.excilys.training.exceptions.NullComputerException;
+import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.ComputerDAOImp;
 

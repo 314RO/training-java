@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.excilys.training.exceptions.NullComputerException;
+import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 
 
@@ -36,7 +36,8 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean add(Computer obj) {
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(ADD_QUERY);
             ) {
             preparedStatement.setString(1, obj.getName());
@@ -59,7 +60,8 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean delete(long id) {
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(DELETE_QUERY);
            ) {
             preparedStatement.setLong(1, id);
@@ -78,7 +80,8 @@ public class ComputerDAOImp implements ComputerDAO {
      * @return true si réussi, false sinon
      */
     public boolean update(long index, Computer obj) {
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(UPDATE_QUERY);
             ) {
 
@@ -104,7 +107,8 @@ public class ComputerDAOImp implements ComputerDAO {
      */
     public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();
             PreparedStatement preparedStatement = connect.prepareStatement(FETCH_QUERY);
 
                 ) {
@@ -146,7 +150,8 @@ public class ComputerDAOImp implements ComputerDAO {
         LocalDate disc= null;
         Computer computer = null;
         long indexCompany = 0;
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             PreparedStatement preparedStatement = connect.prepareStatement(ID_QUERY);
             preparedStatement.setLong(1, id);
@@ -174,7 +179,8 @@ public class ComputerDAOImp implements ComputerDAO {
     public ArrayList<Computer> getByName(String name) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
         
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();) {
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
             preparedStatement.setString(1, name + "%");
@@ -204,7 +210,8 @@ public class ComputerDAOImp implements ComputerDAO {
     
     public long getCount(){
        long count = 0l;
-        try (Connection connect = SQLConnection.INSTANCE.getInstance();){
+       SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();){
             PreparedStatement preparedStatement = connect.prepareStatement(COUNT_QUERY);
             ResultSet result = preparedStatement.executeQuery();
             if (result.first()) {
@@ -221,7 +228,8 @@ public class ComputerDAOImp implements ComputerDAO {
     
     public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String orderBy, String way) {
         ArrayList<Computer> arrayResults = new ArrayList<Computer>();
-        try(Connection connect = SQLConnection.INSTANCE.getInstance();
+        SQLConnection sqlConnection = new SQLConnection();
+        try (Connection connect = sqlConnection.getInstance();
             PreparedStatement preparedStatement = connect.prepareStatement(FETCH_ORDERED_QUERY +orderBy+" "+ way +" LIMIT "+itemPerPage+" OFFSET "+(page-1) * itemPerPage);
 
                 ) {
