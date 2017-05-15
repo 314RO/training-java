@@ -12,15 +12,16 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(value="com.excilys.training.persistence.SQLConnection")
+@ComponentScan(basePackages = "com.excilys.training")
 @Configuration
 public class ProjectConfig {
     
-        @Bean(name="dataSource")
+        @Bean
         public HikariDataSource dataSource() {
         String url=null;
         String user=null;
         String passwd=null;
+        System.out.println("coucou");
         try {
           Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {

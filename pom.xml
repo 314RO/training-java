@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.excilys.training</groupId>
 	<artifactId>training-java</artifactId>
-	<version>0.3.0-RELEASE</version>
+	<version>0.5.0-RELEASE</version>
 	<packaging>war</packaging>
 	<properties>
 		<compiler.source>1.8</compiler.source>
@@ -29,7 +29,7 @@
 
 	<dependencies>
 
-
+		<!-- Spring -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -54,8 +54,12 @@
 			</exclusions>
 		</dependency>
 
+		
+		<!-- /Spring -->
 
 
+
+		<!-- Web -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -67,24 +71,52 @@
 			<artifactId>jsp-api</artifactId>
 			<version>${jsp-api.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- /Web -->
+
+
+		<!-- DATABASE -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- /DATABASE -->
+
+		<!-- Test -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>${gatlin.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- /Test -->
+
+
+		<!-- Logger -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -102,24 +134,17 @@
 			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- /Logger -->
+
+		<!-- Hikari Connection -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>${hikari.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- /Hikari Connection -->
 
-		<dependency>
-			<groupId>io.gatling.highcharts</groupId>
-			<artifactId>gatling-charts-highcharts</artifactId>
-			<version>${gatlin.version}</version>
-			<scope>test</scope>
-		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>ComputerDatabase</finalName>

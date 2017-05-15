@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -16,13 +17,16 @@ import com.zaxxer.hikari.HikariDataSource;
 @Component
 public class SQLConnection {
     
-    @Autowired 
+    @Autowired @Qualifier("dataSource")
     private HikariDataSource dataSource;
 
-    /**
-     * Constructeur par défaut de la classe.
-     */
     public SQLConnection(){}
+    
+    /*
+    @Autowired @Qualifier("dataSource")
+    public void setDataSource(HikariDataSource dataSource) { this.dataSource = dataSource; }
+    */
+    
     
   /*  static {
         ApplicationContext context = new AnnotationConfigApplicationContext(ProjectConfig.class);

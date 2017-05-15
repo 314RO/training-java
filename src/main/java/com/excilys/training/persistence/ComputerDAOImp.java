@@ -8,10 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
+
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 
-
+@Repository
 public class ComputerDAOImp implements ComputerDAO {
     
     private CompanyDAOImp companyDAOImp = new CompanyDAOImp();

@@ -2,10 +2,13 @@ package com.excilys.training.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.ComputerDAOImp;
 
+@Service
 public class ComputerServiceImp implements ComputerService {
 
     /**

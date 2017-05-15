@@ -1,9 +1,13 @@
 package com.excilys.training.service;
 
 import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
 import com.excilys.training.model.Company;
 import com.excilys.training.persistence.CompanyDAOImp;
 
+@Service
 public class CompanyServiceImp implements CompanyService {
 
     /**
