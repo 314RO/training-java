@@ -1,8 +1,6 @@
 package com.excilys.training.persistence;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,31 +12,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.excilys.training.configuration.ProjectConfig;
-import com.excilys.training.model.Company;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
 @Component
-public class CompanyDAOImpTest {
+public class ConnectionTest {
     
-    @Autowired @Qualifier("SQLConnection")
-    SQLConnection sqlConnection;
-    
-    
+        
     @Autowired
     private CompanyDAO companyDAOImp ;
     
-    @Test 
-    public void getByIdTest(){
-        System.out.println("dans le test");
-        System.out.println(companyDAOImp);
-        Company company = new Company.Builder("Apple Inc.").id(1l).build();
-       
-        Company result = companyDAOImp.getById(1);
-        System.out.println(result);
+    @Test
+    public void test() {
+        System.out.println("des tests");
         
-        assertTrue(result.equals(company));
+        try{
+        System.out.println(companyDAOImp);
+        System.out.println(companyDAOImp.getById(1));
+        }
+        catch (Exception e) {e.printStackTrace();}
     }
 
 }

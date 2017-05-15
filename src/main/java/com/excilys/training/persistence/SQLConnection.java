@@ -3,31 +3,26 @@ package com.excilys.training.persistence;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.test.context.ContextConfiguration;
 
-import com.excilys.training.configuration.ProjectConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
-@Component
+@Repository
+
 public class SQLConnection {
     
-    @Autowired @Qualifier("dataSource")
-    private HikariDataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-    public SQLConnection(){}
+   
     
-    /*
-    @Autowired @Qualifier("dataSource")
-    public void setDataSource(HikariDataSource dataSource) { this.dataSource = dataSource; }
-    */
-    
-    
+
   /*  static {
         ApplicationContext context = new AnnotationConfigApplicationContext(ProjectConfig.class);
         dataSource = (HikariDataSource) context.getBean("dataSource");
@@ -37,8 +32,9 @@ public class SQLConnection {
      * @return Connection
      * @throws SQLException 
      */
+        
     public Connection getInstance() throws SQLException {
-        try {            
+        try {   
             return dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();

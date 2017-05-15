@@ -3,25 +3,25 @@ package com.excilys.training.configuration;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import com.excilys.training.persistence.SQLConnection;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = "com.excilys.training")
 @Configuration
+@ComponentScan(basePackages = "com.excilys.training")
+
 public class ProjectConfig {
     
         @Bean
-        public HikariDataSource dataSource() {
+        public DataSource dataSource() {
         String url=null;
         String user=null;
         String passwd=null;
-        System.out.println("coucou");
         try {
           Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -32,14 +32,15 @@ public class ProjectConfig {
         url = rb.getString("url");
         user = rb.getString("user");
         passwd = rb.getString("passwd");
-        System.out.println(user);
                
         HikariConfig config = new HikariConfig();
         
         config.setJdbcUrl(url);
         config.setUsername(user);
         config.setPassword(passwd);   
-        config.setMaximumPoolSize(25);        
+        config.setMaximumPoolSize(25);      
+        System.out.println("ça marche?");
+        System.out.println(new HikariDataSource(config));
         return new HikariDataSource(config);
         }
         catch (MissingResourceException e) {
@@ -48,14 +49,6 @@ public class ProjectConfig {
     }
 }
     
-
-    
-    
-    
-    
-    
-   
-    
-    
+        
 
 }

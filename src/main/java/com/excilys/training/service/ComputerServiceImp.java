@@ -2,15 +2,20 @@ package com.excilys.training.service;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.ComputerDAOImp;
 
+@ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
 @Service
 public class ComputerServiceImp implements ComputerService {
-
+    
+    @Autowired
+    ComputerDAOImp computerDAOImp;
     /**
      * Ajoute l'ordinateur passé en argument à la base de données.
      * @param  obj (Computer)
@@ -18,7 +23,7 @@ public class ComputerServiceImp implements ComputerService {
      */
 
     public boolean add(Computer obj) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         return computerDAOImp.add(obj);
     }
 
@@ -29,7 +34,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return Computer
      */
     public Computer getById(long id) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         Computer computer=null;
         try {
             computer = computerDAOImp.getById(id);
@@ -46,7 +51,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return ArrayList<Computer>
      */
     public ArrayList<Computer> getByName(String name) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         return computerDAOImp.getByName(name);
     }
 
@@ -56,7 +61,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return true si réussi, false sinon
      */
     public boolean delete(long id) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         return computerDAOImp.delete(id);
     }
 
@@ -68,7 +73,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return true si réussi, false sinon
      */
     public boolean update(long index, Computer obj) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         return computerDAOImp.update(index, obj);
     }
 
@@ -79,7 +84,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return ArrayList <Computer>
      */
     public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         ArrayList<Computer> computerList = computerDAOImp.fetchPage(page,itemPerPage);
         return computerList;
     }
@@ -91,7 +96,7 @@ public class ComputerServiceImp implements ComputerService {
     
     
     public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b) {
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        
         ArrayList<Computer> computerList = computerDAOImp.fetchOrderedPage(page,itemPerPage,a,b);
         return computerList;
     }
@@ -101,7 +106,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return int
      */
     public long getCount(){
-        ComputerDAOImp computerDAOImp = new ComputerDAOImp();
+        System.out.println(computerDAOImp);
         return computerDAOImp.getCount();
     }
 }

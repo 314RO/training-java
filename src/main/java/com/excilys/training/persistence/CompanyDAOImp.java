@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.training.model.Company;
@@ -19,12 +21,13 @@ public class CompanyDAOImp implements CompanyDAO {
     private static final String ID_QUERY = "SELECT * FROM company WHERE id = ?";
     private static final String NAME_QUERY = "SELECT * FROM company WHERE name = ?";
     
+    @Autowired @Qualifier("SQLConnection")
+    SQLConnection sqlConnection;
 
     /**
      * Constructeur par défaut de la classe.
      */
-    public CompanyDAOImp() {
-    }
+    public CompanyDAOImp() {}
 
     /**
      * Renvoie une page de la bdd.
@@ -34,10 +37,9 @@ public class CompanyDAOImp implements CompanyDAO {
     public ArrayList<Company> fetchPage(int page) {
         
         ArrayList<Company> arrayResults = new ArrayList<Company>();
-        SQLConnection sqlConnection = new SQLConnection();
+        
         try (Connection connect = sqlConnection.getInstance();)
         {
-
             PreparedStatement preparedStatement = connect.prepareStatement(FETCH_QUERY);
             preparedStatement.setInt(1, page * ITEM_PER_PAGE);
             ResultSet result = preparedStatement.executeQuery();
@@ -62,7 +64,7 @@ public class CompanyDAOImp implements CompanyDAO {
     public ArrayList<Company> fetchAll() {
         
         ArrayList<Company> arrayResults = new ArrayList<Company>();
-        SQLConnection sqlConnection = new SQLConnection();
+        
         try (Connection connect = sqlConnection.getInstance();)
         {
 
@@ -93,7 +95,7 @@ public class CompanyDAOImp implements CompanyDAO {
      * @return Company
      */
     public Company getById(long id) {
-        SQLConnection sqlConnection = new SQLConnection();
+        
         try (Connection connect = sqlConnection.getInstance();) 
         {
             PreparedStatement preparedStatement = connect.prepareStatement(ID_QUERY);
@@ -108,7 +110,7 @@ public class CompanyDAOImp implements CompanyDAO {
     }
     
     public Company getByName(String name) {
-        SQLConnection sqlConnection = new SQLConnection();
+        
         try (Connection connect = sqlConnection.getInstance();) {
             PreparedStatement preparedStatement = connect.prepareStatement(NAME_QUERY);
             preparedStatement.setString(1, name);
