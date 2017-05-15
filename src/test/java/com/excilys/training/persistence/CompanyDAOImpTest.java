@@ -27,7 +27,7 @@ public class CompanyDAOImpTest {
     
     
     @Autowired
-    private CompanyDAO companyDAOImp ;
+    CompanyDAO companyDAOImp ;
     
     @Test 
     public void getByIdTest(){

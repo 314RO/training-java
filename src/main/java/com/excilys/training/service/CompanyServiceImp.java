@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.excilys.training.model.Company;
+import com.excilys.training.persistence.CompanyDAO;
 import com.excilys.training.persistence.CompanyDAOImp;
 
+@ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
 @Service
 public class CompanyServiceImp implements CompanyService {
     
@@ -28,7 +31,7 @@ public class CompanyServiceImp implements CompanyService {
 
     // missing javadoc
     public ArrayList<Company> fetchAll() {
-        
+        System.out.println(companyDAOImp);
         ArrayList<Company> companyList = companyDAOImp.fetchAll();
         return companyList;
     }

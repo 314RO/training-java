@@ -11,6 +11,13 @@ public interface CompanyDAO {
      * @return ArrayList<Company>
      */
     ArrayList<Company> fetchPage(int page);
+    
+    /**
+     *  Renvoie toutes les compagnies.
+     * @return ArrayList<Company>
+     */
+    
+    ArrayList<Company> fetchAll();
 
     /**
      * Renvoie une compagnie.
@@ -18,4 +25,12 @@ public interface CompanyDAO {
      * @return Company
      */
     Company getById(long id);
+    
+    
+    /**
+     * Renvoie une compagnie.
+     * @param  name (String)
+     * @return Company
+     */
+    Company getByName(String name);
 }

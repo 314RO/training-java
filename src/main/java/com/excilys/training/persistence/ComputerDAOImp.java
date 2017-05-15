@@ -32,14 +32,14 @@ public class ComputerDAOImp implements ComputerDAO {
     @Autowired @Qualifier("SQLConnection")
     SQLConnection sqlConnection;
     
+    // doit disparaitre. Pas de lien entre DAO.
     @Autowired
-    private CompanyDAOImp companyDAOImp;
+    CompanyDAOImp companyDAOImp;
     
     /**
      * Constructeur par défaut de la classe.
      */
-    public ComputerDAOImp() {
-    }
+    public ComputerDAOImp() {}
 
     /**
      * Ajout d'un ordinateur à la bdd.

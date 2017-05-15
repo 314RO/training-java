@@ -3,11 +3,15 @@ package com.excilys.training.ui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.training.dto.CompanyDTO;
 import com.excilys.training.dto.ComputerDTO;
@@ -26,14 +30,22 @@ public class editComputer extends HttpServlet {
     // 1) On définit tous les attributs possibles qu'on peut récuperer par l'URL.
    private int id = 0;
    String name ="";
+   @Autowired
+   ComputerServiceImp computerServiceImp;
+   @Autowired
+   CompanyServiceImp companyServiceImp;
 
     public editComputer() {
         super();
         
     }
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ComputerServiceImp computerServiceImp = new ComputerServiceImp();
-        CompanyServiceImp companyServiceImp = new CompanyServiceImp();
+        
         
         
         ArrayList<Company> companyList = new ArrayList<Company>();
