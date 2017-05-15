@@ -57,5 +57,7 @@ public interface ComputerDAO {
      */
     long getCount();
     
+    ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
+    
 
 }

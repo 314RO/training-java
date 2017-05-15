@@ -20,7 +20,9 @@ import com.excilys.training.mapper.MapperCompany;
 import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
+import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.CompanyServiceImp;
+import com.excilys.training.service.ComputerService;
 import com.excilys.training.service.ComputerServiceImp;
 import com.excilys.training.validator.ValidatorWeb;
 
@@ -31,9 +33,9 @@ public class editComputer extends HttpServlet {
    private int id = 0;
    String name ="";
    @Autowired
-   ComputerServiceImp computerServiceImp;
+   ComputerService computerServiceImp;
    @Autowired
-   CompanyServiceImp companyServiceImp;
+   CompanyService companyServiceImp;
 
     public editComputer() {
         super();
@@ -71,16 +73,23 @@ public class editComputer extends HttpServlet {
             ComputerDTO cdto = new ComputerDTO();
             Computer c = null;
                 cdto.setId(id);
+                System.out.println(id);
                 cdto.setName((request.getParameter("computerName")));
+                System.out.println(request.getParameter("computerName"));
                 cdto.setIntroduced((request.getParameter("introduced")));
+                System.out.println((request.getParameter("introduced")));
                 cdto.setDiscontinued((request.getParameter("discontinued")));
+                System.out.println(request.getParameter("discontinued"));
                 cdto.setCompanyName((Long.parseLong(request.getParameter("companyId"))!=0l)? companyServiceImp.getById(Long.parseLong(request.getParameter("companyId"))).getName() :null);
-                
+                System.out.println("tous les champs attribués");
                 if (ValidatorWeb.validName(cdto.getName()) && 
                         ValidatorWeb.validIntroduced(cdto.getIntroduced()) &&
                         ValidatorWeb.validDiscontinued(cdto.getDiscontinued(), cdto.getIntroduced())){
+                System.out.println("avant de convertir dto to obj");
                 c = MapperComputer.DTOToObj(cdto);
+                System.out.println("juste apres");
                 computerServiceImp.update(id,c);
+                System.out.println("et juste apres l'update");
                 }
         }
         catch(NumberFormatException | NegativeValueException e){

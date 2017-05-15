@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
+import com.excilys.training.persistence.ComputerDAO;
 import com.excilys.training.persistence.ComputerDAOImp;
 
 @ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
@@ -15,7 +16,7 @@ import com.excilys.training.persistence.ComputerDAOImp;
 public class ComputerServiceImp implements ComputerService {
     
     @Autowired
-    ComputerDAOImp computerDAOImp;
+    ComputerDAO computerDAOImp;
     /**
      * Ajoute l'ordinateur passé en argument à la base de données.
      * @param  obj (Computer)

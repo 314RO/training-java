@@ -55,6 +55,7 @@ public interface ComputerService {
     long getCount();
     
     
+    ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
     
  
 

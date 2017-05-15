@@ -15,7 +15,7 @@ import com.excilys.training.persistence.CompanyDAOImp;
 public class CompanyServiceImp implements CompanyService {
     
     @Autowired
-    CompanyDAOImp companyDAOImp;
+    CompanyDAO companyDAOImp;
     
     /**
      * Renvoie une page d'éléments de la base de données.

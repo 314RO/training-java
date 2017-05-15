@@ -19,7 +19,9 @@ import com.excilys.training.mapper.MapperCompany;
 import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
+import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.CompanyServiceImp;
+import com.excilys.training.service.ComputerService;
 import com.excilys.training.service.ComputerServiceImp;
 import com.excilys.training.validator.ValidatorWeb;
 
@@ -27,9 +29,9 @@ import com.excilys.training.validator.ValidatorWeb;
 public class addComputer extends HttpServlet {
     private static final long serialVersionUID = 3L;
     @Autowired
-    ComputerServiceImp computerServiceImp;
+    ComputerService computerServiceImp;
     @Autowired
-    CompanyServiceImp companyServiceImp;
+    CompanyService companyServiceImp;
 
     public addComputer() {
         super();
@@ -51,19 +53,15 @@ public class addComputer extends HttpServlet {
             companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
         }
         request.setAttribute("companyList", companyListDTO);
-        System.out.println("2");
         ComputerDTO cdto = new ComputerDTO();
         Computer c = null;
         cdto.setId(id);
-        System.out.println("3");
         cdto.setName((request.getParameter("computerName")));
         cdto.setIntroduced((request.getParameter("introduced")));
         cdto.setDiscontinued((request.getParameter("discontinued")));
         System.out.println(request.getParameter("companyId"));
-        System.out.println("7");
         cdto.setCompanyName((request.getParameter("companyId") != null)
                 ? companyServiceImp.getById(Long.parseLong(request.getParameter("companyId"))).getName() : null);
-        System.out.println("8");
         if (ValidatorWeb.validName(cdto.getName()) && ValidatorWeb.validIntroduced(cdto.getIntroduced())
                 && ValidatorWeb.validDiscontinued(cdto.getDiscontinued(), cdto.getIntroduced())) {
             c = MapperComputer.DTOToObj(cdto);
@@ -71,7 +69,6 @@ public class addComputer extends HttpServlet {
             computerServiceImp.add(c);
             System.out.println("ajouté");
         }
-        System.out.println("9");
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(request, response);
     }
 

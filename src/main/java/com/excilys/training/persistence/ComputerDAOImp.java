@@ -34,7 +34,7 @@ public class ComputerDAOImp implements ComputerDAO {
     
     // doit disparaitre. Pas de lien entre DAO.
     @Autowired
-    CompanyDAOImp companyDAOImp;
+    CompanyDAO companyDAOImp;
     
     /**
      * Constructeur par défaut de la classe.

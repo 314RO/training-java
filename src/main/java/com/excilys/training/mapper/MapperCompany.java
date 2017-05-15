@@ -1,8 +1,11 @@
 package com.excilys.training.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.excilys.training.dto.CompanyDTO;
 import com.excilys.training.model.Company;
 
+@Component
 public class MapperCompany {
 
         public MapperCompany(){}

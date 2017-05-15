@@ -17,7 +17,9 @@ import com.excilys.training.dto.ComputerDTO;
 import com.excilys.training.exception.NegativeValueException;
 import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Computer;
+import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.CompanyServiceImp;
+import com.excilys.training.service.ComputerService;
 import com.excilys.training.service.ComputerServiceImp;
 
 /**
@@ -36,9 +38,9 @@ public class WebUIMain extends HttpServlet {
     private String order = "ASC";
     private static String lastRequest = "none";
     @Autowired
-    ComputerServiceImp computerServiceImp;
+    ComputerService computerServiceImp;
     @Autowired
-    CompanyServiceImp companyServiceImp;
+    CompanyService companyServiceImp;
     /**
      * @see HttpServlet#HttpServlet()
      */
