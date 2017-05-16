@@ -10,22 +10,23 @@ import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.ComputerDAO;
 import com.excilys.training.persistence.ComputerDAOImp;
+import com.excilys.training.persistence.JDBCTemplateComputer;
 
 @ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
 @Service
 public class ComputerServiceImp implements ComputerService {
     
     @Autowired
-    ComputerDAO computerDAOImp;
+    JDBCTemplateComputer jdbcTemplateComputer;
     /**
      * Ajoute l'ordinateur passé en argument à la base de données.
      * @param  obj (Computer)
      * @return true si réussi, false sinon
      */
 
-    public boolean add(Computer obj) {
+    public void add(Computer obj) {
         
-        return computerDAOImp.add(obj);
+        jdbcTemplateComputer.add(obj);
     }
 
     /**
@@ -38,7 +39,7 @@ public class ComputerServiceImp implements ComputerService {
         
         Computer computer=null;
         try {
-            computer = computerDAOImp.getById(id);
+            computer = jdbcTemplateComputer.getById(id);
         } catch (NullComputerException e) {
             e.printStackTrace();
         }
@@ -53,7 +54,7 @@ public class ComputerServiceImp implements ComputerService {
      */
     public ArrayList<Computer> getByName(String name) {
         
-        return computerDAOImp.getByName(name);
+        return jdbcTemplateComputer.getByName(name);
     }
 
     /**
@@ -61,9 +62,9 @@ public class ComputerServiceImp implements ComputerService {
      * @param  id (long)
      * @return true si réussi, false sinon
      */
-    public boolean delete(long id) {
+    public void delete(long id) {
         
-        return computerDAOImp.delete(id);
+        jdbcTemplateComputer.delete(id);
     }
 
     /**
@@ -73,9 +74,9 @@ public class ComputerServiceImp implements ComputerService {
      * @param  obj (Computer)
      * @return true si réussi, false sinon
      */
-    public boolean update(long index, Computer obj) {
+    public void  update(long index, Computer obj) {
         
-        return computerDAOImp.update(index, obj);
+        jdbcTemplateComputer.update(index, obj);
     }
 
     /**
@@ -86,19 +87,15 @@ public class ComputerServiceImp implements ComputerService {
      */
     public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
         
-        ArrayList<Computer> computerList = computerDAOImp.fetchPage(page,itemPerPage);
+        ArrayList<Computer> computerList = jdbcTemplateComputer.fetchPage(page,itemPerPage);
         return computerList;
     }
     
-    
-    
-    
-    
-    
+       
     
     public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b) {
         
-        ArrayList<Computer> computerList = computerDAOImp.fetchOrderedPage(page,itemPerPage,a,b);
+        ArrayList<Computer> computerList = jdbcTemplateComputer.fetchOrderedPage(page,itemPerPage,a,b);
         return computerList;
     }
     
@@ -107,7 +104,7 @@ public class ComputerServiceImp implements ComputerService {
      * @return int
      */
     public long getCount(){
-        System.out.println(computerDAOImp);
-        return computerDAOImp.getCount();
+        System.out.println(jdbcTemplateComputer);
+        return jdbcTemplateComputer.getCount();
     }
 }

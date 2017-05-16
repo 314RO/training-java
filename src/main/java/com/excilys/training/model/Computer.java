@@ -2,6 +2,7 @@ package com.excilys.training.model;
 
 import java.time.LocalDate;
 
+
 public class Computer {
     private long id;
     private String name;

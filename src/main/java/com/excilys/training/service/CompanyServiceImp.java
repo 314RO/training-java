@@ -7,52 +7,49 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.excilys.training.model.Company;
-import com.excilys.training.persistence.CompanyDAO;
-import com.excilys.training.persistence.CompanyDAOImp;
+import com.excilys.training.persistence.JDBCTemplateCompany;
 
-@ContextConfiguration(classes=com.excilys.training.configuration.ProjectConfig.class)
+@ContextConfiguration(classes = com.excilys.training.configuration.ProjectConfig.class)
 @Service
 public class CompanyServiceImp implements CompanyService {
-    
+
     @Autowired
-    CompanyDAO companyDAOImp;
-    
+    JDBCTemplateCompany jdbcTemplateCompany;
+
     /**
-     * Renvoie une page d'éléments de la base de données.
-     * Le nombre d'éléments par page est défini dans les DAOs.
-     * @param  page (int)
+     * Renvoie une page d'éléments de la base de données. Le nombre d'éléments
+     * par page est défini dans les DAOs.
+     * 
+     * @param page
+     *            (int)
      * @return ArrayList <Company>
      */
     public ArrayList<Company> fetchPage(int page) {
-        
-        ArrayList<Company> companyList = companyDAOImp.fetchPage(page);
+        ArrayList<Company> companyList = jdbcTemplateCompany.fetchPage(page);
         return companyList;
     }
 
     // missing javadoc
     public ArrayList<Company> fetchAll() {
-        System.out.println(companyDAOImp);
-        ArrayList<Company> companyList = companyDAOImp.fetchAll();
+        ArrayList<Company> companyList = jdbcTemplateCompany.fetchAll();
         return companyList;
     }
 
     /**
-     * Renvoie la compagnie correspondant à l'id
-     * passé en argument.
-     * @param  id (long)
+     * Renvoie la compagnie correspondant à l'id passé en argument.
+     * 
+     * @param id
+     *            (long)
      * @return Company
      */
     public Company getById(long id) {
-        
-        Company company = companyDAOImp.getById(id);
+        Company company = jdbcTemplateCompany.getById(id);
         return company;
     }
-    
-    
+
     // missing javadoc
     public Company getByName(String name) {
-        
-        Company company = companyDAOImp.getByName(name);
+        Company company = jdbcTemplateCompany.getByName(name);
         return company;
     }
 }

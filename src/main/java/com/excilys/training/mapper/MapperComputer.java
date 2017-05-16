@@ -9,25 +9,22 @@ import org.springframework.stereotype.Component;
 import com.excilys.training.dto.ComputerDTO;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
-import com.excilys.training.persistence.CompanyDAO;
-import com.excilys.training.persistence.CompanyDAOImp;
+import com.excilys.training.persistence.JDBCTemplateCompany;
 
 @Component
 public class MapperComputer {
+   
+    static JDBCTemplateCompany jdbcTemplateCompany;
     
-  
-    static CompanyDAO companyDAOImp;
+    @Autowired
+    public void setjdbcTemplateCompany(JDBCTemplateCompany jdbcTemplateCompany){
+        MapperComputer.jdbcTemplateCompany = jdbcTemplateCompany;
+    }
     
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
         public MapperComputer(){}
-        
-        @Autowired
-        public void setCompanyDAO(CompanyDAO companyDAOImp){
-            MapperComputer.companyDAOImp = companyDAOImp;
-        }
-        
-        
+                       
         public static ComputerDTO ObjToDTO(Computer computer){
            ComputerDTO computerDTO = new ComputerDTO();
            computerDTO.setId(computer.getId());
@@ -44,17 +41,14 @@ public class MapperComputer {
             String name = computerDTO.getName();
             LocalDate introduced = (computerDTO.getIntroduced()!=null && !computerDTO.getIntroduced().equals(""))? LocalDate.parse(computerDTO.getIntroduced(),formatter) : null;
             LocalDate discontinued = (computerDTO.getDiscontinued ()!=null && !computerDTO.getDiscontinued().equals(""))? LocalDate.parse(computerDTO.getDiscontinued(),formatter) : null;
-            System.out.println("dans le mapper");
-            System.out.println(id);
-            System.out.println(introduced);
-            System.out.println(discontinued);
-            System.out.println(companyDAOImp);
             
-            Company company = new Company.Builder(computerDTO.getCompanyName()).id(companyDAOImp.getByName(computerDTO.getCompanyName()).getId()).build();
+            System.out.println("name  " + computerDTO.getCompanyName());
+            System.out.println(jdbcTemplateCompany);
+            if 
+            Company company = new Company.Builder(computerDTO.getCompanyName()).id(jdbcTemplateCompany.getByName(computerDTO.getCompanyName()).getId()).build();
             
             computer = new Computer.Builder(name).id(id).introduced(introduced).discontinued(discontinued).company(company).build();
             return computer;
-           
-         }
+            }
 }
   

@@ -10,7 +10,7 @@ public interface ComputerService {
      * @param obj (Computer)
      * @return boolean
      */
-    boolean add(Computer obj);
+    void add(Computer obj);
 
     /**
      * Trouver un élément avec l'id.
@@ -31,7 +31,7 @@ public interface ComputerService {
      * @param  id (long)
      * @return boolean
      */
-    boolean delete(long id);
+    void delete(long id);
 
     /**
      * Mise à jour d'un élément.
@@ -39,7 +39,7 @@ public interface ComputerService {
      * @param  obj (Computer)
      * @return boolean
      */
-    boolean update(long index, Computer obj);
+    void update(long index, Computer obj);
 
     /**
      * Afficher page de la bdd.

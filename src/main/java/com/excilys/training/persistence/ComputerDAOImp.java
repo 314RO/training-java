@@ -46,7 +46,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @param obj (Computer à ajouter)
      * @return true si réussi, false sinon
      */
-    public boolean add(Computer obj) {
+    public void add(Computer obj) {
         
         try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(ADD_QUERY);
@@ -70,7 +70,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @param id (long)
      * @return true si réussi, false sinon
      */
-    public boolean delete(long id) {
+    public void delete(long id) {
         
         try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(DELETE_QUERY);
@@ -90,7 +90,7 @@ public class ComputerDAOImp implements ComputerDAO {
      * @param  obj (Computer contenant les nouvelles données)
      * @return true si réussi, false sinon
      */
-    public boolean update(long index, Computer obj) {
+    public void update(long index, Computer obj) {
         
         try (Connection connect = sqlConnection.getInstance();
                 PreparedStatement preparedStatement = connect.prepareStatement(UPDATE_QUERY);

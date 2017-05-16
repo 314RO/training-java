@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,15 @@ public class CompanyDAOImp implements CompanyDAO {
     @Autowired @Qualifier("SQLConnection")
     SQLConnection sqlConnection;
 
+    
+    
+   
+    public void setDataSource(DataSource ds) {
+        
+        
+    }
+    
+    
     /**
      * Constructeur par défaut de la classe.
      */
@@ -122,6 +133,8 @@ public class CompanyDAOImp implements CompanyDAO {
             else {return new Company.Builder(null).build();}
         } catch (SQLException e) { return new Company.Builder(null).build();}
     }
+
+    
     
 
 }

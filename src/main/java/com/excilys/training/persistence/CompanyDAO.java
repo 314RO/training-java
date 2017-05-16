@@ -1,10 +1,17 @@
 package com.excilys.training.persistence;
 
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import com.excilys.training.model.Company;
 
 public interface CompanyDAO {
-
+    
+    
+    public void setDataSource(DataSource ds);
+    
+    
     /**
      *  Renvoie une page de la bdd.
      * @param  page (int)
