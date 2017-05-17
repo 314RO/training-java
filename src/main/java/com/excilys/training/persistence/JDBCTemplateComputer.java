@@ -103,7 +103,6 @@ public class JDBCTemplateComputer implements ComputerDAO {
             computerDTO.setId((long) row.get("id"));
             computerDTO.setName(row.get("name").toString());
             if (row.get("introduced") != null) {
-                System.out.println(row.get("introduced").toString());
                 computerDTO
                         .setIntroduced(LocalDate.parse(row.get("introduced").toString(), formatter).format(formatter2));
             }

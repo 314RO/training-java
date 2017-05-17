@@ -104,7 +104,6 @@ public class ComputerServiceImp implements ComputerService {
      * @return int
      */
     public long getCount(){
-        System.out.println(jdbcTemplateComputer);
         return jdbcTemplateComputer.getCount();
     }
 }
