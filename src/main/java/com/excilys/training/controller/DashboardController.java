@@ -20,9 +20,7 @@ import com.excilys.training.service.ComputerService;
 @RequestMapping("/dashboard")
 public class DashboardController {
 
-    private static final long serialVersionUID = 1L;
-
-    // 1) On définit tous les attributs possibles qu'on peut récuperer par
+    // 1) On définit tous les attributs possibles que l'on peut récuperer par
     // l'URL.
 
     private int itemPerPage = 10;
@@ -31,6 +29,7 @@ public class DashboardController {
     private String column = "default";
     private String order = "ASC";
     private static String lastRequest = "none";
+    
     @Autowired
     ComputerService computerServiceImp;
     @Autowired
@@ -44,7 +43,6 @@ public class DashboardController {
             @RequestParam(value = "order", required = false) String order) {
         ArrayList<Computer> computerList = new ArrayList<Computer>();
         ArrayList<ComputerDTO> computerListDTO = new ArrayList<ComputerDTO>();
-
 
         if (page != null) {
             this.page = page;
@@ -104,13 +102,13 @@ public class DashboardController {
             }
 
             if (itemPerPage != null)
-                if (itemPerPage<1) {
-                throw new NegativeValueException();
-            } else {
-                this.itemPerPage = itemPerPage;
-                this.page = 1;
-                System.out.println("itemPerPage : " + this.itemPerPage);
-            }
+                if (itemPerPage < 1) {
+                    throw new NegativeValueException();
+                } else {
+                    this.itemPerPage = itemPerPage;
+                    this.page = 1;
+                    System.out.println("itemPerPage : " + this.itemPerPage);
+                }
 
             switch (lastRequest) {
 

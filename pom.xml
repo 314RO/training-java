@@ -3,11 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.excilys.training</groupId>
 	<artifactId>training-java</artifactId>
-	<version>0.3.0-RELEASE</version>
+	<version>0.7.0-RELEASE</version>
 	<packaging>war</packaging>
 	<properties>
+
 		<compiler.source>1.8</compiler.source>
 		<compiler.target>1.8</compiler.target>
+
 		<servlet-api.version>3.0.1</servlet-api.version>
 		<jsp-api.version>2.2</jsp-api.version>
 		<mysql.version>6.0.6</mysql.version>
@@ -20,19 +22,24 @@
 		<gatlin.version>2.1.7</gatlin.version>
 		<gatlin-plugin.version>2.1.7</gatlin-plugin.version>
 		<scala-plugin.version>3.2.2</scala-plugin.version>
-		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
-		<maven-checkstyle-plugin.configLocation>checkstyle.xml</maven-checkstyle-plugin.configLocation>
 		<slf4j.version>1.8.0-alpha2</slf4j.version>
 		<logback.version>1.0.1</logback.version>
 		<spring.version>4.3.8.RELEASE</spring.version>
+		<cglib.version>2.2.2</cglib.version>
+
+		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+		<maven-checkstyle-plugin.configLocation>checkstyle.xml</maven-checkstyle-plugin.configLocation>
+
 	</properties>
 
 	<dependencies>
 
+		<!-- Spring et annotations -->
+
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
-			<version>2.2.2</version>
+			<version>${cglib.version}</version>
 		</dependency>
 
 		<dependency>
@@ -73,17 +80,13 @@
 
 
 
-
+		<!-- servlet -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
-
-
-
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -96,24 +99,41 @@
 			<artifactId>jsp-api</artifactId>
 			<version>${jsp-api.version}</version>
 		</dependency>
+
+		<!-- tests -->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-			<scope>compile</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>${gatlin.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<!-- logger -->
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -132,25 +152,26 @@
 			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+
+
+		<!-- Connection BDD -->
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>${hikari.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
-			<scope>test</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>io.gatling.highcharts</groupId>
-			<artifactId>gatling-charts-highcharts</artifactId>
-			<version>${gatlin.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
+
+
 	<build>
 		<finalName>ComputerDatabase</finalName>
 		<plugins>
@@ -159,8 +180,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.6.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${computer.source}</source>
+					<target>${computer.target}</target>
 				</configuration>
 			</plugin>
 			<plugin>
