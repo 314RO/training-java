@@ -9,13 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.ComponentScan;
 
 @Configuration
 @ComponentScan(basePackages = "com.excilys.training")
-
 public class ProjectConfig {
 
     @Bean
@@ -23,11 +20,7 @@ public class ProjectConfig {
         String url = null;
         String user = null;
         String passwd = null;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+
         try {
             ResourceBundle rb = ResourceBundle.getBundle("connection");
 
