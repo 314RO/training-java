@@ -26,42 +26,49 @@ public class EditController {
     ComputerService computerServiceImp;
     @Autowired
     CompanyService companyServiceImp;
-    
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String add(ModelMap model, @RequestParam(value = "id") Long id) {
+        ArrayList<CompanyDTO> companyListDTO = new ArrayList<CompanyDTO>();
+        ArrayList<Company> companyList = new ArrayList<Company>();
+
+        companyList = companyServiceImp.fetchAll();
+        for (int i = 0; i < companyList.size(); i++) {
+            companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
+        }
+
+        model.addAttribute("companyList", companyListDTO);
+        model.addAttribute("id", id);
+        return "editComputer";
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public String printHello(ModelMap model, @RequestParam(value = "computerName", required = false) String name,
+            @RequestParam(value = "id", required = false) Long id,
             @RequestParam(value = "introduced", required = false) String introduced,
             @RequestParam(value = "discontinued", required = false) String discontinued,
-            @RequestParam(value = "companyId", required = false) Long companyId,
-            @RequestParam(value = "id", required = false) Long id
-            ){
-        
-    ArrayList<CompanyDTO> companyListDTO = new ArrayList<CompanyDTO>();
-    ArrayList<Company> companyList = new ArrayList<Company>();
-    
-    
-    companyList = companyServiceImp.fetchAll();
-    for (int i = 0; i < companyList.size(); i++) {
-        companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
-    }
-    
-    model.addAttribute("companyList", companyListDTO);
-    ComputerDTO cdto = new ComputerDTO();
-    Computer c = null;
-    cdto.setId(id);
-    cdto.setName(name);
-    cdto.setIntroduced(introduced);
-    cdto.setDiscontinued(discontinued);
-    System.out.println(id);
-    cdto.setCompanyName((id != null) ? companyServiceImp.getById(id).getName() : null);
-    if (ValidatorWeb.validName(name) && ValidatorWeb.validIntroduced(introduced)
-            && ValidatorWeb.validDiscontinued(discontinued, introduced)) {
-        c = MapperComputer.DTOToObj(cdto);
-        System.out.println(computerServiceImp);
-        computerServiceImp.add(c);
-        System.out.println("ajouté");
-    }
-    
+            @RequestParam(value = "companyId", required = false) Long companyId
+            
 
- return "redirect:/dashboard";
-}
+    ) {
+
+        ComputerDTO cdto = new ComputerDTO();
+        Computer c = null;
+        cdto.setId(id);
+        cdto.setName(name);
+        cdto.setIntroduced(introduced);
+        cdto.setDiscontinued(discontinued);
+        System.out.println(id);
+        cdto.setCompanyName((companyId != null && companyId !=0) ? companyServiceImp.getById(companyId).getName() : null);
+        if (ValidatorWeb.validName(name) && ValidatorWeb.validIntroduced(introduced)
+                && ValidatorWeb.validDiscontinued(discontinued, introduced)) {
+            c = MapperComputer.DTOToObj(cdto);
+            System.out.println(computerServiceImp);
+            computerServiceImp.update(id,c);
+            System.out.println("mis a jour");
+        }
+        else { model.addAttribute("Erreur",4);}
+
+        return "redirect:/dashboard";
+    }
 }

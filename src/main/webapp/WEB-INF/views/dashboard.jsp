@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -17,8 +18,18 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
+			
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a>
+				
+			<div class="dropdown" style="float:right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="lang"/><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="?mylocale=fr">Fr</a></li>
+              <li><a href="?mylocale=en">En</a></li>	
+              </ul>
+              </div>
+				
 		</div>
 	</header>
 
@@ -26,7 +37,7 @@
 		<div class="container">
 			<h1 id="homeTitle">
 				<c:out value="${count}" />
-				ordinateurs dans la bdd et
+				<spring:message code="count"/>
 				<c:out value="${pageNbr}" />
 				pages et on est sur la page
 				<c:out value="${page}" />
@@ -38,14 +49,14 @@
 
 						<input type="search" id="searchbox" name="search"
 							class="form-control" placeholder="Search name" /> <input
-							type="submit" id="searchsubmit" value="Filter by name"
+							type="submit" id="searchsubmit" value=<spring:message code="search.none"/>
 							class="btn btn-primary" />
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer">Add
-						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
-						onclick="$.fn.toggleEditMode();">Edit</a>
+					<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="add"/>
+						</a> <a class="btn btn-default" id="editComputer" href="#"
+						onclick="$.fn.toggleEditMode();"><spring:message code="edit"/></a>
 				</div>
 			</div>
 		</div>
@@ -56,15 +67,64 @@
 
 		<div class="container" style="margin-top: 10px;">
 			<c:choose>
-				<c:when test="${Erreur==1}">Tu me demandes de la merde</c:when>
-				<c:when test="${Erreur==2}">J'ai pas compris</c:when>
+				<c:when test="${Erreur==1}"><spring:message code="error.url"/></c:when>
+				<c:when test="${Erreur==2}"><spring:message code="error.problem"/></c:when>
+				<c:when test="${Erreur==3}"><spring:message code="error.add"/></c:when>
+				<c:when test="${Erreur==4}"><spring:message code="error.edit"/></c:when>
 				<c:otherwise>
 					<form action="">
-  						<input onChange="this.form.submit()" type="radio" value="none" name="column"> none  
-  						<input onChange="this.form.submit()" type="radio" value="name" name="column"> name   
-						<input onChange="this.form.submit()" type="radio" value="introduced" name="column"> introduced   
-						<input onChange="this.form.submit()" type="radio" value="discontinued" name="column"> discontinued   
-						<input onChange="this.form.submit()" type="radio" value="company" name="column"> company?   
+
+						<c:choose>
+							<c:when test="${column=='none'}">
+								<input onChange="this.form.submit()" type="radio" value="none"
+									name="column" checked>
+								<spring:message code="search.none" />
+							</c:when>
+							<c:otherwise>
+								<input onChange="this.form.submit()" type="radio" value="none"
+									name="column">
+								<spring:message code="search.none" />
+							</c:otherwise>
+						</c:choose>
+
+						<c:choose>
+							<c:when test="${column=='name'}">
+								<input onChange="this.form.submit()" type="radio" value="name"
+									name="column" checked>
+								<spring:message code="search.name" />
+							</c:when>
+							<c:otherwise>
+								<input onChange="this.form.submit()" type="radio" value="name"
+									name="column">
+								<spring:message code="search.name" />
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${column=='introduced'}">
+								<input onChange="this.form.submit()" type="radio" value="introduced"
+									name="column" checked>
+								<spring:message code="search.introduced" />
+							</c:when>
+							<c:otherwise>
+								<input onChange="this.form.submit()" type="radio" value="introduced"
+									name="column">
+								<spring:message code="search.introduced" />
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${column=='discontinued'}">
+								<input onChange="this.form.submit()" type="radio" value="discontinued"
+									name="column" checked>
+								<spring:message code="search.discontinued" />
+							</c:when>
+							<c:otherwise>
+								<input onChange="this.form.submit()" type="radio" value="discontinued"
+									name="column">
+								<spring:message code="search.discontinued" />
+							</c:otherwise>
+						</c:choose>
+								
+			
 				    </form>
 				
 				
@@ -83,12 +143,12 @@
 											class="fa fa-trash-o fa-lg"></i>
 									</a>
 								</span></th>
-								<th>Computer name</th>
-								<th>Introduced date</th>
+								<th><spring:message code="tab.name"/></th>
+								<th><spring:message code="tab.introduced"/></th>
 								<!-- Table header for Discontinued Date -->
-								<th>Discontinued date</th>
+								<th><spring:message code="tab.discontinued"/></th>
 								<!-- Table header for Company -->
-								<th>Company</th>
+								<th><spring:message code="tab.company"/></th>
 
 							</tr>
 						</thead>

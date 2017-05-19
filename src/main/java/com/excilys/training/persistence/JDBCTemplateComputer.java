@@ -45,7 +45,9 @@ public class JDBCTemplateComputer implements ComputerDAO {
         String name = obj.getName();
         String introduced = (obj.getIntroduced() != null) ? obj.getIntroduced().toString() : null;
         String discontinued = (obj.getDiscontinued() != null) ? obj.getDiscontinued().toString() : null;
-        long idCompany = (obj.getCompany().getId() != 0) ? obj.getCompany().getId() : null;
+        System.out.println(obj.getCompany());
+        System.out.println("coucou");
+        Long idCompany = (obj.getCompany() != null) ? obj.getCompany().getId() : null;
         jdbcTemplate.update(ADD_QUERY, name, introduced, discontinued, idCompany);
 
     }
@@ -58,8 +60,7 @@ public class JDBCTemplateComputer implements ComputerDAO {
         String name = obj.getName();
         String introduced = (obj.getIntroduced() != null) ? obj.getIntroduced().toString() : null;
         String discontinued = (obj.getDiscontinued() != null) ? obj.getDiscontinued().toString() : null;
-        long idCompany = (obj.getCompany().getId() != 0) ? obj.getCompany().getId() : null;
-
+        Long idCompany = (obj.getCompany() != null) ? obj.getCompany().getId() : null;
         jdbcTemplate.update(UPDATE_QUERY, name, introduced, discontinued, idCompany, index);
 
     }
@@ -80,7 +81,7 @@ public class JDBCTemplateComputer implements ComputerDAO {
     }
 
     public ArrayList<Computer> getByName(String name) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(NAME_QUERY, name);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(NAME_QUERY, name + "%");
         return MapToArray(rows);
     }
 

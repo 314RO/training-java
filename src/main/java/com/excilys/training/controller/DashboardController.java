@@ -1,6 +1,7 @@
 package com.excilys.training.controller;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,6 @@ import com.excilys.training.service.ComputerService;
 @RequestMapping("/dashboard")
 public class DashboardController {
 
-    // 1) On définit tous les attributs possibles que l'on peut récuperer par
-    // l'URL.
-
     private int itemPerPage = 10;
     private int page = 1;
     private String search = "";
@@ -36,14 +34,22 @@ public class DashboardController {
     CompanyService companyServiceImp;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String printHello(ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
+    public String printHello(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "column", required = false) String column,
             @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "order", required = false) String order) {
+            @RequestParam(value = "order", required = false) String order,
+            @RequestParam(value = "Erreur", required = false) Integer erreur
+            ) {
+        System.out.println(locale);
         ArrayList<Computer> computerList = new ArrayList<Computer>();
         ArrayList<ComputerDTO> computerListDTO = new ArrayList<ComputerDTO>();
 
+        
+        if (erreur != null) {
+            model.addAttribute("Erreur", erreur);
+        }
+        
         if (page != null) {
             this.page = page;
         }
@@ -75,7 +81,6 @@ public class DashboardController {
             case "name":
             case "introduced":
             case "discontinued":
-            case "company":
                 this.column = column;
                 lastRequest = "column";
                 break;
@@ -89,12 +94,9 @@ public class DashboardController {
 
         long count = computerServiceImp.getCount();
 
-        // 2) try catch sur chacun des atttributs pour s'assurer de leur
-        // validité.
-        // On rappelle la jsp quelque soit la validité de l'attribut (message
-        // d'erreur)
+       
         try {
-            // le try au dessus catch la NumberFormatException du parseInt
+            
             if (this.page < 0) {
                 throw new NegativeValueException();
             } else {
@@ -113,6 +115,7 @@ public class DashboardController {
             switch (lastRequest) {
 
             case "search":
+                System.out.println(this.search);
                 computerList = computerServiceImp.getByName(this.search);
 
                 for (int i = 0; i < computerList.size(); i++) {
@@ -150,8 +153,22 @@ public class DashboardController {
 
         model.addAttribute("pageNbr", (int) Math.ceil((double) count / this.itemPerPage));
         model.addAttribute("page", this.page);
+        model.addAttribute("column", this.column);
 
         return "dashboard";
     }
+    
+    
+    
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public String printHello(ModelMap model, @RequestParam(value = "selection") int[] id){
+        for (int i :id) {System.out.println(i); computerServiceImp.delete(i);}
+       
+        return "redirect:/dashboard";
+    }
+    
+    
+    
 
 }
