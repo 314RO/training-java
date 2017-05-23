@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 import com.excilys.training.persistence.JDBCTemplateComputer;
 
-@ContextConfiguration(classes = com.excilys.training.configuration.ProjectConfig.class)
 @Service
+@Transactional
 public class ComputerServiceImp implements ComputerService {
 
     @Autowired

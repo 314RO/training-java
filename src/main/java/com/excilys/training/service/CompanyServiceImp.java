@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.model.Company;
 import com.excilys.training.persistence.JDBCTemplateCompany;
 
-@ContextConfiguration(classes = com.excilys.training.configuration.ProjectConfig.class)
 @Service
+@Transactional
 public class CompanyServiceImp implements CompanyService {
 
     @Autowired

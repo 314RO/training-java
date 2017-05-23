@@ -1,9 +1,5 @@
 package com.excilys.training.dto;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 public class ComputerDTO {
     private long id;
     private String name;

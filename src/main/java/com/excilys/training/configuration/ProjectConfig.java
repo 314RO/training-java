@@ -7,12 +7,17 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+
 import org.springframework.context.annotation.ComponentScan;
 
 @Configuration
 @ComponentScan(basePackages = "com.excilys.training")
+@EnableTransactionManagement
 public class ProjectConfig {
 
     @Bean
@@ -38,6 +43,14 @@ public class ProjectConfig {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    
+    @Bean
+    public PlatformTransactionManager transactionManager(){
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource());
+        return transactionManager;
     }
     
     

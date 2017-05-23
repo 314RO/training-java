@@ -5,18 +5,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
+
 
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.dto.ComputerDTO;
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.mapper.ComputerRowMapper;
 import com.excilys.training.mapper.MapperComputer;
 import com.excilys.training.model.Computer;
+import com.excilys.training.model.QCompany;
+import com.excilys.training.model.QComputer;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.hibernate.HibernateQueryFactory;
+import com.querydsl.sql.SQLQueryFactory;
 
 @Repository
 public class JDBCTemplateComputer implements ComputerDAO {
@@ -32,23 +44,48 @@ public class JDBCTemplateComputer implements ComputerDAO {
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM computer";
 
     private JdbcTemplate jdbcTemplate;
-
+   
+    
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
+    
+    @Autowired
+    private SQLQueryFactory queryFactory;
+    
+    @Autowired
+    PlatformTransactionManager transactionManager;
+    
     @Autowired
     JDBCTemplateCompany JdbcTemplateCompany;
 
     public void add(Computer obj) {
-        String name = obj.getName();
-        String introduced = (obj.getIntroduced() != null) ? obj.getIntroduced().toString() : null;
-        String discontinued = (obj.getDiscontinued() != null) ? obj.getDiscontinued().toString() : null;
-        System.out.println(obj.getCompany());
-        System.out.println("coucou");
-        Long idCompany = (obj.getCompany() != null) ? obj.getCompany().getId() : null;
-        jdbcTemplate.update(ADD_QUERY, name, introduced, discontinued, idCompany);
+
+        System.out.println(obj);
+        QComputer Qcomputer = QComputer.computer;
+        QCompany Qcompany = QCompany.company;
+        Long c = queryFactory.select(Qcomputer.id).where(Qcomputer.name.eq("CM-200")).from(Qcomputer).fetchOne();
+        System.out.println(c);
+        List<String> names = queryFactory.select(Qcomputer.name).from(Qcomputer).fetch();
+        System.out.println(names);
+        
+        List<Tuple> result = queryFactory.select(Qcomputer.name,Qcomputer.introduced,Qcomputer.discontinued)
+                .from(Qcomputer).fetch();
+        System.out.println(result);
+        
+        System.out.println("merde");
+        List<Computer> computerResult = queryFactory.select(Qcomputer).from(Qcomputer).leftJoin(Qcompany)
+                .on(Qcompany.id.eq(Qcomputer.company.id)).limit(10).offset(10 * 3).fetch();
+        
+        System.out.println(computerResult);
+        List<Computer> dtos = queryFactory.select(Projections.constructor(Computer.class, Qcomputer.name, Qcomputer.introduced, Qcomputer.discontinued)).from(Qcomputer).fetch();
+                
+        System.out.println(dtos);
+        //List<Computer> computerList = queryFactory.select(computer.name).from(computer);
+        //System.out.println(computerList);
+
+       
 
     }
 

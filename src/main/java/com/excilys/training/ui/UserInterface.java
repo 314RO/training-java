@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.excilys.training.exception.ChronologicalException;
 import com.excilys.training.exception.CustomDateException;
 import com.excilys.training.exception.NegativeValueException;
@@ -11,13 +13,17 @@ import com.excilys.training.exception.NotNameException;
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
+import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.CompanyServiceImp;
+import com.excilys.training.service.ComputerService;
 import com.excilys.training.service.ComputerServiceImp;
 import com.excilys.training.validator.ValidatorCLI;
 
 public class UserInterface {
-    private CompanyServiceImp companyServiceImp = new CompanyServiceImp();
-    private ComputerServiceImp computerServiceImp = new ComputerServiceImp();
+    @Autowired
+    private CompanyService companyServiceImp ;
+    @Autowired
+    private ComputerService computerServiceImp ;
     private static final Scanner SC = new Scanner(System.in);
 
     /**

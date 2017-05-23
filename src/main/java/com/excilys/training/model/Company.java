@@ -1,9 +1,22 @@
 package com.excilys.training.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.Generated;
+
+@Entity
 public class Company {
+    @Id
     private long id;
+    @Column
     private String name;
 
+    
+    protected Company(){};
     /**
      * Constructeur avec Builder.
      * @param builder (Builder)
@@ -18,6 +31,7 @@ public class Company {
      * @return id
      */
     public long getId() {
+        
         return id;
     }
 

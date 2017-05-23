@@ -34,7 +34,7 @@ public class DashboardController {
     CompanyService companyServiceImp;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String printHello(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
+    public String dashboard(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "column", required = false) String column,
             @RequestParam(value = "page", required = false) Integer page,
