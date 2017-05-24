@@ -1,16 +1,13 @@
 package com.excilys.training.persistence;
 
-import java.util.ArrayList;
-
-import javax.sql.DataSource;
+import java.util.List;
 
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 
 public interface ComputerDAO {
 
-    public void setDataSource(DataSource ds);
-
+    
     /**
      * Ajout d'un élément.
      * 
@@ -18,7 +15,7 @@ public interface ComputerDAO {
      *            (Computer)
      * @return boolean
      */
-    void add(Computer obj);
+    long add(Computer obj);
 
     /**
      * Trouver un élément.
@@ -37,7 +34,7 @@ public interface ComputerDAO {
      *            (String)
      * @return ArrayList<Computer>
      */
-    ArrayList<Computer> getByName(String name);
+    List<Computer> getByName(String name);
 
     /**
      * Supprimer un élément.
@@ -66,7 +63,7 @@ public interface ComputerDAO {
      *            (int)
      * @return ArrayList<Computer>
      */
-    ArrayList<Computer> fetchPage(int page, int itemPerPage);
+    List<Computer> fetchPage(int page, int itemPerPage);
 
     /**
      * Obtenir le nombre d'ordinateur dans la bdd.
@@ -75,6 +72,6 @@ public interface ComputerDAO {
      */
     long getCount();
 
-    ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
+    List<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
 
 }

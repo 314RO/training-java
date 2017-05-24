@@ -1,10 +1,9 @@
 package com.excilys.training.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.exception.NullComputerException;
@@ -26,9 +25,9 @@ public class ComputerServiceImp implements ComputerService {
      * @return true si réussi, false sinon
      */
 
-    public void add(Computer obj) {
+    public long add(Computer obj) {
 
-        jdbcTemplateComputer.add(obj);
+        return jdbcTemplateComputer.add(obj);
     }
 
     /**
@@ -56,7 +55,7 @@ public class ComputerServiceImp implements ComputerService {
      *            (String)
      * @return ArrayList<Computer>
      */
-    public ArrayList<Computer> getByName(String name) {
+    public List<Computer> getByName(String name) {
 
         return jdbcTemplateComputer.getByName(name);
     }
@@ -96,15 +95,15 @@ public class ComputerServiceImp implements ComputerService {
      *            (int)
      * @return ArrayList <Computer>
      */
-    public ArrayList<Computer> fetchPage(int page, int itemPerPage) {
+    public List<Computer> fetchPage(int page, int itemPerPage) {
 
-        ArrayList<Computer> computerList = jdbcTemplateComputer.fetchPage(page, itemPerPage);
+        List<Computer> computerList = jdbcTemplateComputer.fetchPage(page, itemPerPage);
         return computerList;
     }
 
-    public ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b) {
+    public List<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b) {
 
-        ArrayList<Computer> computerList = jdbcTemplateComputer.fetchOrderedPage(page, itemPerPage, a, b);
+        List<Computer> computerList = jdbcTemplateComputer.fetchOrderedPage(page, itemPerPage, a, b);
         return computerList;
     }
 

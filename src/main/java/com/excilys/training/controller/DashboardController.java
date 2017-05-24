@@ -1,6 +1,7 @@
 package com.excilys.training.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class DashboardController {
             @RequestParam(value = "Erreur", required = false) Integer erreur
             ) {
         System.out.println(locale);
-        ArrayList<Computer> computerList = new ArrayList<Computer>();
-        ArrayList<ComputerDTO> computerListDTO = new ArrayList<ComputerDTO>();
+        List<Computer> computerList = new ArrayList<Computer>();
+        List<ComputerDTO> computerListDTO = new ArrayList<ComputerDTO>();
 
         
         if (erreur != null) {

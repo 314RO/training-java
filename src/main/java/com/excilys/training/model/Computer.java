@@ -19,7 +19,7 @@ public class Computer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
-    private String name ="";
+    private String name;
     @Column
     private LocalDate introduced;
     @Column
@@ -30,16 +30,10 @@ public class Computer {
     private Company company;
 
 
+    public Computer(){}
     
-    public Computer(String name, LocalDate intro, LocalDate disc, Company company){
-        this.name=name;
-        this.introduced=intro;
-        this.discontinued=disc;
-        this.company=company;
-        
-        
-        
-    };
+    
+   
     /**
      * Constructeur avec Builder.
      * @param builder (Builder)
@@ -120,46 +114,39 @@ public class Computer {
         }
     }
 
-    /**
-     * getter.
-     * @return id
-     */
+    
+    
+
     public long getId() {
         return id;
     }
-
-    /**
-     * getter.
-     * @return name
-     */
+    public void setId(long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
-
-    /**
-     * getter.
-     * @return introduced
-     */
+    public void setName(String name) {
+        this.name = name;
+    }
     public LocalDate getIntroduced() {
         return introduced;
     }
-
-    /**
-     * getter.
-     * @return discontinued
-     */
+    public void setIntroduced(LocalDate introduced) {
+        this.introduced = introduced;
+    }
     public LocalDate getDiscontinued() {
         return discontinued;
     }
-
-    /**
-     * getter.
-     * @return company
-     */
+    public void setDiscontinued(LocalDate discontinued) {
+        this.discontinued = discontinued;
+    }
     public Company getCompany() {
         return company;
     }
-
+    public void setCompany(Company company) {
+        this.company = company;
+    }
     /**
      * hashCode.
      * @return int

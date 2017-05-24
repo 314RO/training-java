@@ -1,6 +1,7 @@
 package com.excilys.training.service;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import com.excilys.training.model.Computer;
 
 public interface ComputerService {
@@ -10,7 +11,7 @@ public interface ComputerService {
      * @param obj (Computer)
      * @return boolean
      */
-    void add(Computer obj);
+    long add(Computer obj);
 
     /**
      * Trouver un élément avec l'id.
@@ -24,7 +25,7 @@ public interface ComputerService {
      * @param  name (String)
      * @return ArrayList<Computer>
      */
-    ArrayList<Computer> getByName(String name);
+    List<Computer> getByName(String name);
 
     /**
      * Supprime élément.
@@ -46,7 +47,7 @@ public interface ComputerService {
      * @param  page (int)
      * @return ArrayList<Computer>
      */
-    ArrayList<Computer> fetchPage(int page, int itemPerPage);
+    List<Computer> fetchPage(int page, int itemPerPage);
     
     /**
      * Obtenir le nombre d'ordinateur dans la bdd.
@@ -55,7 +56,7 @@ public interface ComputerService {
     long getCount();
     
     
-    ArrayList<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
+    List<Computer> fetchOrderedPage(int page, int itemPerPage, String a, String b);
     
  
 

@@ -2,10 +2,6 @@ package com.excilys.training.controller;
 
 import java.util.ArrayList;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -68,8 +64,8 @@ public class AddController {
                 && ValidatorWeb.validDiscontinued(discontinued, introduced)) {
             c = MapperComputer.DTOToObj(cdto);
             System.out.println(computerServiceImp);
-            computerServiceImp.add(c);
-            System.out.println("ajouté");
+            long x = computerServiceImp.add(c);
+            System.out.println(x+" ajouté");
         }
         else { model.addAttribute("Erreur",3);}
         
