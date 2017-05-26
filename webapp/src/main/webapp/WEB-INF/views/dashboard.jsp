@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -101,12 +102,12 @@
 						</c:choose>
 						<c:choose>
 							<c:when test="${column=='introduced'}">
-								<input onChange="this.form.submit()" type="radio" value="introduced"
+								<input onChange="this.form.submit()" type="radio" value=".${column}."
 									name="column" checked>
 								<spring:message code="search.introduced" />
 							</c:when>
 							<c:otherwise>
-								<input onChange="this.form.submit()" type="radio" value="introduced"
+								<input onChange="this.form.submit()" type="radio" value=".${column}."
 									name="column">
 								<spring:message code="search.introduced" />
 							</c:otherwise>

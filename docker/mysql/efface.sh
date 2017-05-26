@@ -1,2 +1,0 @@
-docker stop mysqlContainer
-docker rm mysqlContainer

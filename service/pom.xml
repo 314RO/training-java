@@ -2,24 +2,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-<parent>
-    <groupId>com.excilys.training</groupId>
-	<artifactId>training-java</artifactId>
-	<version>0.7.0-RELEASE</version>
-	
-    </parent>
-<artifactId>service</artifactId>	
-<packaging>jar</packaging>
-<name>Service module</name>
- <dependencies>
+	<parent>
+		<groupId>com.excilys.training</groupId>
+		<artifactId>training-java</artifactId>
+		<version>0.7.1-RELEASE</version>
+
+	</parent>
+	<artifactId>service</artifactId>
+	<packaging>jar</packaging>
+	<name>Service module</name>
+	<dependencies>
 
 
-<dependency>
-        <groupId>${parent.groupId}</groupId>
-        <artifactId>persistence</artifactId>
-        <version>${parent.version}</version>
-    </dependency>
-<!-- Spring et annotations -->
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>persistence</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- Spring et annotations -->
 
 		<dependency>
 			<groupId>cglib</groupId>
@@ -75,5 +75,5 @@
 
 		</dependency>
 
- </dependencies>
+	</dependencies>
 </project>
