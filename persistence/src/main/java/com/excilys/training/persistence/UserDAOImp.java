@@ -36,5 +36,11 @@ public class UserDAOImp implements UserDAO{
         User UserResult = (User) queryFactory.get().select(Quser).from(Quser).where(Quser.name.eq(user.getName()),Quser.password.eq(user.getPassword())).fetchOne();
         return UserResult;
     }
+    
+    public User getByName(String name) {
+       
+        User UserResult = (User) queryFactory.get().select(Quser).from(Quser).where(Quser.name.eq(name)).fetchOne();
+        return UserResult;
+    }
 
 }

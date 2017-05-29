@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -19,18 +20,24 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			
+
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a>
-				
-			<div class="dropdown" style="float:right">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="lang"/><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="?mylocale=fr">Fr</a></li>
-              <li><a href="?mylocale=en">En</a></li>	
-              </ul>
-              </div>
-				
+			<div class="pull-right bg-success">
+				<a href="<c:url value="/logout" />">Logout</a>
+		
+				<div class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+						role="button" aria-haspopup="true" aria-expanded="false"><spring:message
+							code="lang" /><span class="caret"></span></a>
+							
+					<ul class="dropdown-menu">
+						<li><a href="?mylocale=fr">Fr</a></li>
+						<li><a href="?mylocale=en">En</a></li>
+					</ul>
+				</div>
+			</div>
+
 		</div>
 	</header>
 
@@ -38,40 +45,55 @@
 		<div class="container">
 			<h1 id="homeTitle">
 				<c:out value="${count}" />
-				<spring:message code="count"/>
+				<spring:message code="count" />
 				<c:out value="${pageNbr}" />
 				pages et on est sur la page
 				<c:out value="${page}" />
 
 			</h1>
+
+
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
 							class="form-control" placeholder="Search name" /> <input
-							type="submit" id="searchsubmit" value=<spring:message code="search.none"/>
+							type="submit" id="searchsubmit"
+							value=<spring:message code="search.filter"/>
 							class="btn btn-primary" />
 					</form>
 				</div>
-				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="add"/>
-						</a> <a class="btn btn-default" id="editComputer" href="#"
-						onclick="$.fn.toggleEditMode();"><spring:message code="edit"/></a>
-				</div>
+				<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+					<div class="pull-right">
+						<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message
+								code="add" /> </a> <a class="btn btn-default" id="editComputer"
+							href="#" onclick="$.fn.toggleEditMode();"><spring:message
+								code="edit" /></a>
+					</div>
+				</sec:authorize>
+
 			</div>
 		</div>
-
-		<form id="deleteForm" action="#" method="POST">
-			<input type="hidden" name="selection" value="">
-		</form>
-
+		<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+			<form id="deleteForm" action="#" method="POST">
+				<input type="hidden" name="selection" value="">
+			</form>
+		</sec:authorize>
 		<div class="container" style="margin-top: 10px;">
 			<c:choose>
-				<c:when test="${Erreur==1}"><spring:message code="error.url"/></c:when>
-				<c:when test="${Erreur==2}"><spring:message code="error.problem"/></c:when>
-				<c:when test="${Erreur==3}"><spring:message code="error.add"/></c:when>
-				<c:when test="${Erreur==4}"><spring:message code="error.edit"/></c:when>
+				<c:when test="${Erreur==1}">
+					<spring:message code="error.url" />
+				</c:when>
+				<c:when test="${Erreur==2}">
+					<spring:message code="error.problem" />
+				</c:when>
+				<c:when test="${Erreur==3}">
+					<spring:message code="error.add" />
+				</c:when>
+				<c:when test="${Erreur==4}">
+					<spring:message code="error.edit" />
+				</c:when>
 				<c:otherwise>
 					<form action="">
 
@@ -102,35 +124,35 @@
 						</c:choose>
 						<c:choose>
 							<c:when test="${column=='introduced'}">
-								<input onChange="this.form.submit()" type="radio" value=".${column}."
-									name="column" checked>
+								<input onChange="this.form.submit()" type="radio"
+									value="introduced" name="column" checked>
 								<spring:message code="search.introduced" />
 							</c:when>
 							<c:otherwise>
-								<input onChange="this.form.submit()" type="radio" value=".${column}."
-									name="column">
+								<input onChange="this.form.submit()" type="radio"
+									value="introduced" name="column">
 								<spring:message code="search.introduced" />
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
 							<c:when test="${column=='discontinued'}">
-								<input onChange="this.form.submit()" type="radio" value="discontinued"
-									name="column" checked>
+								<input onChange="this.form.submit()" type="radio"
+									value="discontinued" name="column" checked>
 								<spring:message code="search.discontinued" />
 							</c:when>
 							<c:otherwise>
-								<input onChange="this.form.submit()" type="radio" value="discontinued"
-									name="column">
+								<input onChange="this.form.submit()" type="radio"
+									value="discontinued" name="column">
 								<spring:message code="search.discontinued" />
 							</c:otherwise>
 						</c:choose>
-								
-			
-				    </form>
-				
-				
-				
-				
+
+
+					</form>
+
+
+
+
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
@@ -144,12 +166,12 @@
 											class="fa fa-trash-o fa-lg"></i>
 									</a>
 								</span></th>
-								<th><spring:message code="tab.name"/></th>
-								<th><spring:message code="tab.introduced"/></th>
+								<th><spring:message code="tab.name" /></th>
+								<th><spring:message code="tab.introduced" /></th>
 								<!-- Table header for Discontinued Date -->
-								<th><spring:message code="tab.discontinued"/></th>
+								<th><spring:message code="tab.discontinued" /></th>
 								<!-- Table header for Company -->
-								<th><spring:message code="tab.company"/></th>
+								<th><spring:message code="tab.company" /></th>
 
 							</tr>
 						</thead>

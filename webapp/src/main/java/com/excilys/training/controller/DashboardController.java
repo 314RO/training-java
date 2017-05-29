@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +25,6 @@ import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.ComputerService;
 
 @Controller
-@RequestMapping("/dashboard")
 public class DashboardController {
 
     private int itemPerPage = 10;
@@ -34,7 +39,7 @@ public class DashboardController {
     @Autowired
     CompanyService companyServiceImp;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/dashboard",method = RequestMethod.GET)
     public String dashboard(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "column", required = false) String column,
@@ -162,14 +167,21 @@ public class DashboardController {
     
     
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/dashboard",method = RequestMethod.POST)
     public String printHello(ModelMap model, @RequestParam(value = "selection") int[] id){
         for (int i :id) {System.out.println(i); computerServiceImp.delete(i);}
        
         return "redirect:/dashboard";
     }
     
-    
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){    
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";
+    }
     
 
 }
