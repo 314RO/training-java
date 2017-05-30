@@ -24,13 +24,18 @@
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a>
 			<div class="pull-right bg-success">
-				<a href="<c:url value="/logout" />">Logout</a>
-		
+				<form id="logout" action="logout" method="POST">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> <input type="submit" name="logout"
+						value="<spring:message code="logout" />" />
+
+				</form>
+
 				<div class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 						role="button" aria-haspopup="true" aria-expanded="false"><spring:message
 							code="lang" /><span class="caret"></span></a>
-							
+
 					<ul class="dropdown-menu">
 						<li><a href="?mylocale=fr">Fr</a></li>
 						<li><a href="?mylocale=en">En</a></li>
@@ -77,7 +82,9 @@
 		</div>
 		<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 			<form id="deleteForm" action="#" method="POST">
-				<input type="hidden" name="selection" value="">
+				<input type="hidden" name="selection" value=""> <input
+					type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
 			</form>
 		</sec:authorize>
 		<div class="container" style="margin-top: 10px;">

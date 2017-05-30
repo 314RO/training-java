@@ -27,6 +27,8 @@
 					<h1>Add Computer</h1>
 					<form action="addComputer" method="POST">
 						<fieldset>
+						<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
 							<div class="form-group">
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" name="computerName"

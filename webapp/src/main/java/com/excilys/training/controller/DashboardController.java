@@ -174,7 +174,7 @@ public class DashboardController {
         return "redirect:/dashboard";
     }
     
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @RequestMapping(value="/logout", method = RequestMethod.POST)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
