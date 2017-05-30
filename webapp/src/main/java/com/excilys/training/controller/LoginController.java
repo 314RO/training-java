@@ -12,14 +12,12 @@ public class LoginController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String GET(ModelMap model){
-        System.out.println("GETlogin");
         return "login";
     }
     
     
     @RequestMapping(method = RequestMethod.POST)
     public String POST(ModelMap model){
-        System.out.println("POSTlogin");
         return "login";
     }
 

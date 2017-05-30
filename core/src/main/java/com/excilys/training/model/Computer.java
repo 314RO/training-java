@@ -2,7 +2,6 @@ package com.excilys.training.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,22 +14,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name="computer")
 public class Computer {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    
     private String name;
-    @Column
+    
     private LocalDate introduced;
-    @Column
+    
     private LocalDate discontinued;
     
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", referencedColumnName="id")
     private Company company;
 
 
-    public Computer(){}
+    public Computer() {}
     
     
    

@@ -27,6 +27,10 @@ public class EditController {
     ComputerService computerServiceImp;
     @Autowired
     CompanyService companyServiceImp;
+    @Autowired
+    MapperCompany mapperCompany;
+    @Autowired
+    MapperComputer mapperComputer;
 
     @RequestMapping(method = RequestMethod.GET)
     public String add(ModelMap model, @RequestParam(value = "id") Long id) {
@@ -35,7 +39,7 @@ public class EditController {
 
         companyList = companyServiceImp.fetchAll();
         for (int i = 0; i < companyList.size(); i++) {
-            companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
+            companyListDTO.add(mapperCompany.ObjToDTO(companyList.get(i)));
         }
 
         model.addAttribute("companyList", companyListDTO);
@@ -59,14 +63,12 @@ public class EditController {
         cdto.setName(name);
         cdto.setIntroduced(introduced);
         cdto.setDiscontinued(discontinued);
-        System.out.println(id);
+        cdto.setCompanyId(id);
         cdto.setCompanyName((companyId != null && companyId !=0) ? companyServiceImp.getById(companyId).getName() : null);
         if (ValidatorWeb.validName(name) && ValidatorWeb.validIntroduced(introduced)
                 && ValidatorWeb.validDiscontinued(discontinued, introduced)) {
-            c = MapperComputer.DTOToObj(cdto);
-            System.out.println(computerServiceImp);
+            c = mapperComputer.DTOToObj(cdto);
             computerServiceImp.update(id,c);
-            System.out.println("mis a jour");
         }
         else { model.addAttribute("Erreur",4);}
 

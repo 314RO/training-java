@@ -6,7 +6,10 @@ import com.excilys.training.model.Company;
 public interface CompanyService {
 
     
-    // missing javadoc
+    /**
+     * Récupérer toutes les compagnies (pour la liste déroulante).
+     * @return  List<Company>
+     */
     List<Company> fetchAll();
     
     
@@ -18,7 +21,18 @@ public interface CompanyService {
     Company getById(long id);
   
     
- // missing javadoc
+    /**
+     * Trouver un élément avec le nom.
+     * @param  name (String)
+     * @return Company
+     */
     Company getByName(String name);
+    
+    /**
+     * Supprimer une compangie.
+     * @param  id (long)
+     * @return boolean
+     */
+    boolean delete(long id);
 
 }

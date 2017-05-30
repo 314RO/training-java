@@ -38,6 +38,8 @@ public class DashboardController {
     ComputerService computerServiceImp;
     @Autowired
     CompanyService companyServiceImp;
+    @Autowired
+    MapperComputer mapperComputer;
 
     @RequestMapping(value="/dashboard",method = RequestMethod.GET)
     public String dashboard(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
@@ -47,7 +49,7 @@ public class DashboardController {
             @RequestParam(value = "order", required = false) String order,
             @RequestParam(value = "Erreur", required = false) Integer erreur
             ) {
-        System.out.println(locale);
+        
         List<Computer> computerList = new ArrayList<Computer>();
         List<ComputerDTO> computerListDTO = new ArrayList<ComputerDTO>();
 
@@ -63,7 +65,6 @@ public class DashboardController {
         if (search != null) {
             this.search = search;
             lastRequest = "search";
-            System.out.println("search : " + search);
         }
 
         if (order != null) {
@@ -77,7 +78,6 @@ public class DashboardController {
                 this.order = order;
             }
 
-            System.out.println("order :  " + order);
 
         }
 
@@ -94,7 +94,6 @@ public class DashboardController {
                 this.column = "none";
                 lastRequest = "none";
             }
-            System.out.println("column : " + column);
 
         }
 
@@ -106,7 +105,6 @@ public class DashboardController {
             if (this.page < 0) {
                 throw new NegativeValueException();
             } else {
-                System.out.println("page : " + this.page);
             }
 
             if (itemPerPage != null)
@@ -115,17 +113,15 @@ public class DashboardController {
                 } else {
                     this.itemPerPage = itemPerPage;
                     this.page = 1;
-                    System.out.println("itemPerPage : " + this.itemPerPage);
                 }
 
             switch (lastRequest) {
 
             case "search":
-                System.out.println(this.search);
                 computerList = computerServiceImp.getByName(this.search);
 
                 for (int i = 0; i < computerList.size(); i++) {
-                    computerListDTO.add(MapperComputer.ObjToDTO(computerList.get(i)));
+                    computerListDTO.add(mapperComputer.ObjToDTO(computerList.get(i)));
                 }
                 model.addAttribute("computerList", computerListDTO);
                 break;
@@ -133,14 +129,14 @@ public class DashboardController {
                 computerList = computerServiceImp.fetchOrderedPage(this.page, this.itemPerPage, this.column,
                         this.order);
                 for (int i = 0; i < computerList.size(); i++) {
-                    computerListDTO.add(MapperComputer.ObjToDTO(computerList.get(i)));
+                    computerListDTO.add(mapperComputer.ObjToDTO(computerList.get(i)));
                 }
                 model.addAttribute("computerList", computerListDTO);
                 break;
             case "none":
                 computerList = computerServiceImp.fetchPage(this.page, this.itemPerPage);
                 for (int i = 0; i < computerList.size(); i++) {
-                    computerListDTO.add(MapperComputer.ObjToDTO(computerList.get(i)));
+                    computerListDTO.add(mapperComputer.ObjToDTO(computerList.get(i)));
                 }
                 model.addAttribute("computerList", computerListDTO);
                 break;
@@ -152,7 +148,6 @@ public class DashboardController {
             model.addAttribute("Erreur", 1);
         } finally {
 
-            System.out.println(lastRequest);
 
         }
         model.addAttribute("count", count);
@@ -169,7 +164,7 @@ public class DashboardController {
     
     @RequestMapping(value="/dashboard",method = RequestMethod.POST)
     public String printHello(ModelMap model, @RequestParam(value = "selection") int[] id){
-        for (int i :id) {System.out.println(i); computerServiceImp.delete(i);}
+        for (int i :id) {computerServiceImp.delete(i);}
        
         return "redirect:/dashboard";
     }

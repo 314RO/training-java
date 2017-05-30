@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.model.Company;
 import com.excilys.training.model.QCompany;
@@ -17,7 +19,8 @@ import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 
 
 @Repository
-public class JDBCTemplateCompany implements CompanyDAO {
+@Transactional(propagation = Propagation.MANDATORY)
+public class QueryDSLCompanyImp implements CompanyDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -52,6 +55,15 @@ public class JDBCTemplateCompany implements CompanyDAO {
                 .where(Qcompany.name.eq(name)).fetchOne();
         return companyResult;
 
+    }
+    
+    
+    
+
+    @Override
+    public boolean delete(long id) {
+        queryFactory.get().delete(Qcompany).where(Qcompany.id.eq(id)).execute();
+        return false;
     }
 
 }

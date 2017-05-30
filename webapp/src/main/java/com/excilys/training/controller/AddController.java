@@ -28,6 +28,10 @@ public class AddController {
     ComputerService computerServiceImp;
     @Autowired
     CompanyService companyServiceImp;
+    @Autowired
+    MapperCompany mapperCompany;
+    @Autowired
+    MapperComputer mapperComputer;
 
     int id = 0;
 
@@ -38,7 +42,7 @@ public class AddController {
 	
         companyList = companyServiceImp.fetchAll();
         for (int i = 0; i < companyList.size(); i++) {
-            companyListDTO.add(MapperCompany.ObjToDTO(companyList.get(i)));
+            companyListDTO.add(mapperCompany.ObjToDTO(companyList.get(i)));
         }
 
         model.addAttribute("companyList", companyListDTO);
@@ -58,14 +62,12 @@ public class AddController {
         cdto.setName(name);
         cdto.setIntroduced(introduced);
         cdto.setDiscontinued(discontinued);
-        System.out.println(id);
+        cdto.setCompanyId(id);
         cdto.setCompanyName((id != null && id !=0) ? companyServiceImp.getById(id).getName() : null);
         if (ValidatorWeb.validName(name) && ValidatorWeb.validIntroduced(introduced)
                 && ValidatorWeb.validDiscontinued(discontinued, introduced)) {
-            c = MapperComputer.DTOToObj(cdto);
-            System.out.println(computerServiceImp);
-            long x = computerServiceImp.add(c);
-            System.out.println(x+" ajouté");
+            c = mapperComputer.DTOToObj(cdto);
+            computerServiceImp.add(c);
         }
         else { model.addAttribute("Erreur",3);}
         

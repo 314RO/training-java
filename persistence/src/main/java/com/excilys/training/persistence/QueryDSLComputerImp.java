@@ -7,7 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
@@ -18,7 +19,8 @@ import com.querydsl.jpa.hibernate.HibernateQuery;
 import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 
 @Repository
-public class JDBCTemplateComputer implements ComputerDAO {
+@Transactional(propagation = Propagation.MANDATORY)
+public class QueryDSLComputerImp implements ComputerDAO {
 
 
     @Autowired
@@ -35,11 +37,7 @@ public class JDBCTemplateComputer implements ComputerDAO {
     private Supplier<HibernateQueryFactory> queryFactory = () -> new HibernateQueryFactory(
             sessionFactory.getCurrentSession());
 
-    @Autowired
-    PlatformTransactionManager transactionManager;
-
-    @Autowired
-    JDBCTemplateCompany JdbcTemplateCompany;
+    
 
     public long add(Computer obj) {
 
@@ -122,6 +120,13 @@ public class JDBCTemplateComputer implements ComputerDAO {
         }
 
         List<Computer> computersResult = request.fetch();
+        return computersResult;
+    }
+
+    @Override
+    public List<Computer> getByCompany(long id) {
+        List<Computer> computersResult = queryFactory.get().select(Qcomputer).from(Qcomputer).leftJoin(Qcompany)
+                .on(Qcompany.id.eq(Qcomputer.company.id)).where(Qcompany.id.eq(id)).fetch();
         return computersResult;
     }
 

@@ -2,40 +2,49 @@ package com.excilys.training.persistence;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import com.excilys.training.exception.NullComputerException;
 import com.excilys.training.model.Computer;
 
 public interface ComputerDAO {
 
-    
+    void setSessionFactory(SessionFactory sessionFactory);
     /**
      * Ajout d'un élément.
      * 
-     * @param obj
-     *            (Computer)
+     * @param obj (Computer)
      * @return boolean
      */
     long add(Computer obj);
 
     /**
-     * Trouver un élément.
+     * Trouver un élément avec l'id.
      * 
-     * @param id
-     *            (long)
+     * @param id (long)
      * @return Computer
      * @throws NullComputerException
      */
     Computer getById(long id) throws NullComputerException;
 
     /**
-     * Renvoie une page de la bdd.
+     * Renvoie les ordinateurs dont le nom contient l'argument.
      * 
-     * @param name
-     *            (String)
+     * @param name (String)
      * @return ArrayList<Computer>
      */
     List<Computer> getByName(String name);
 
+    
+    /**
+     * Renvoie les ordinateurs associés à la compagnie.
+     * 
+     * @param id (long)
+     *
+     * @return ArrayList<Computer>
+     */
+    List<Computer> getByCompany(long id);
+    
     /**
      * Supprimer un élément.
      * 

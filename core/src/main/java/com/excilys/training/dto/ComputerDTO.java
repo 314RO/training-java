@@ -6,6 +6,7 @@ public class ComputerDTO {
     private String introduced;
     private String discontinued;
     private String companyName;
+    private long companyId;
 
     public ComputerDTO(){}
 
@@ -47,6 +48,14 @@ public class ComputerDTO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
     }
     
     
