@@ -11,7 +11,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -25,6 +26,12 @@ public class ProjectConfig {
         String url = null;
         String user = null;
         String passwd = null;
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+          } catch (ClassNotFoundException e) {
+              e.printStackTrace();
+          }
 
         try {
             ResourceBundle rb = ResourceBundle.getBundle("connection");
@@ -32,30 +39,32 @@ public class ProjectConfig {
             url = rb.getString("url");
             user = rb.getString("user");
             passwd = rb.getString("passwd");
+            HikariConfig config = new HikariConfig();
 
-            MysqlDataSource dataSource = new MysqlDataSource();
-            dataSource.setUrl(url);
-            dataSource.setUser(user);
-            dataSource.setPassword(passwd);
-            return dataSource;
-            
-        }   catch (MissingResourceException e) {
+            config.setJdbcUrl(url);
+            config.setUsername(user);
+            config.setPassword(passwd);
+
+            config.setMaximumPoolSize(10);
+            config.setAutoCommit(false);
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+            HikariDataSource ds = new HikariDataSource(config);
+            return ds;
+
+        } catch (MissingResourceException e) {
             e.printStackTrace();
             return null;
         }
     }
-    
-    
+
     @Bean
-    public PlatformTransactionManager transactionManager(){
+    public PlatformTransactionManager transactionManager() {
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
         transactionManager.setDataSource(dataSource());
         return transactionManager;
     }
-    
-    
-    
-    
-    
 
 }
