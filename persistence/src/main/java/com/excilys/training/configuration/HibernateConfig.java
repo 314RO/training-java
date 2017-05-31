@@ -18,10 +18,10 @@ import com.querydsl.sql.SQLTemplates;
 public class HibernateConfig {
 
     @Autowired
-    DataSource datasource;
+    private DataSource datasource;
 
-    SQLTemplates templates = new MySQLTemplates();
-    Configuration configuration = new Configuration(templates);
+    private SQLTemplates templates = new MySQLTemplates();
+    private Configuration configuration = new Configuration(templates);
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {

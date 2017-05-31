@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    DataSource datasource;
+    private DataSource datasource;
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -39,12 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/dashboard").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA') or hasRole('ROLE_USER')")
                 .antMatchers("/editComputer").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/addComputer").access("hasRole('ROLE_ADMIN')")
-                .and().formLogin().loginPage("/login").permitAll();
-        
+                .antMatchers("/computer").permitAll()
+                .and().formLogin().loginPage("/login");
+        http.csrf().ignoringAntMatchers("/computer/**");
+     
         http.logout()                                                             
         .logoutUrl("/dashboard?logout")                                                
         .logoutSuccessUrl("/dashboard?logout")  // valeur par défaut                                
         .invalidateHttpSession(true) // par défaut
         .clearAuthentication(true).deleteCookies("JSESSIONID");
+        
+        
     }
 }

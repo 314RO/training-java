@@ -25,13 +25,13 @@ import com.excilys.training.validator.ValidatorWeb;
 public class AddController {
 
     @Autowired
-    ComputerService computerServiceImp;
+    private ComputerService computerServiceImp;
     @Autowired
-    CompanyService companyServiceImp;
+    private CompanyService companyServiceImp;
     @Autowired
-    MapperCompany mapperCompany;
+    private MapperCompany mapperCompany;
     @Autowired
-    MapperComputer mapperComputer;
+    private MapperComputer mapperComputer;
 
     int id = 0;
 

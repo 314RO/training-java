@@ -27,7 +27,7 @@ public class UserDAOImp implements UserDAO{
             sessionFactory.getCurrentSession());
     
     @Autowired
-    PlatformTransactionManager transactionManager;
+    private PlatformTransactionManager transactionManager;
     
     
     public User check(User user) {

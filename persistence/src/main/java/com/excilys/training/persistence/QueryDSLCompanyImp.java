@@ -36,7 +36,7 @@ public class QueryDSLCompanyImp implements CompanyDAO {
             sessionFactory.getCurrentSession());
 
     @Autowired
-    PlatformTransactionManager transactionManager;
+    private PlatformTransactionManager transactionManager;
 
     public List<Company> fetchAll() {
         List<Company> companyResult = queryFactory.get().select(Qcompany).from(Qcompany).fetch();

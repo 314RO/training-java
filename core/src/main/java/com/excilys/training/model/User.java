@@ -6,24 +6,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
     @Id
-    @Column
     private String name;
-    @Column
     private String password;
-    @Column
     private String status;
-    
-    
-    public User(){};
-    
-    public User (String name, String pswd, String status){
+
+    public User() {
+    };
+
+    public User(String name, String pswd, String status) {
         this.name = name;
-        this.password=pswd;
-        this.status=status;
-        
+        this.password = pswd;
+        this.status = status;
+
     }
 
     public String getName() {
@@ -86,10 +83,5 @@ public class User {
             return false;
         return true;
     }
-    
-    
-    
-    
-    
 
 }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -16,10 +18,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.excilys.training.dto.ComputerDTO;
 import com.excilys.training.exception.NegativeValueException;
 import com.excilys.training.mapper.MapperComputer;
+import com.excilys.training.model.Company;
 import com.excilys.training.model.Computer;
 import com.excilys.training.service.CompanyService;
 import com.excilys.training.service.ComputerService;
@@ -35,11 +39,11 @@ public class DashboardController {
     private static String lastRequest = "none";
     
     @Autowired
-    ComputerService computerServiceImp;
+    private ComputerService computerServiceImp;
     @Autowired
-    CompanyService companyServiceImp;
+    private CompanyService companyServiceImp;
     @Autowired
-    MapperComputer mapperComputer;
+    private MapperComputer mapperComputer;
 
     @RequestMapping(value="/dashboard",method = RequestMethod.GET)
     public String dashboard(Locale locale, ModelMap model, @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
@@ -164,7 +168,7 @@ public class DashboardController {
     
     @RequestMapping(value="/dashboard",method = RequestMethod.POST)
     public String printHello(ModelMap model, @RequestParam(value = "selection") int[] id){
-        for (int i :id) {computerServiceImp.delete(i);}
+        for (int i :id) {System.out.println(i);computerServiceImp.delete(i);}
        
         return "redirect:/dashboard";
     }
@@ -177,6 +181,17 @@ public class DashboardController {
         }
         return "redirect:/login?logout";
     }
+    
+    
+//    @RequestMapping(value = "/company/", method = RequestMethod.GET)
+//    public ResponseEntity<List<Company>> listAllCompanies() {
+//        List<Company> companies = companyServiceImp.fetchAll();
+//        if(companies.isEmpty()){
+//            return new ResponseEntity<List<Company>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+//        }
+//        return new ResponseEntity<List<Company>>(companies, HttpStatus.OK);
+//    }
+
     
 
 }

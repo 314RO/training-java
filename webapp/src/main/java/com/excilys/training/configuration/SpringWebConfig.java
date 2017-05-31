@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,7 +29,7 @@ import org.springframework.web.servlet.view.JstlView;
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
     
     @Autowired
-    DataSource datasource;
+    private DataSource datasource;
     
     @Bean
     public InternalResourceViewResolver viewResolver() {
@@ -67,6 +68,13 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("mylocale");
         registry.addInterceptor(interceptor);
+    }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/computer/**")
+            .allowedMethods("GET","POST","PUT","DELETE")
+            .maxAge(3600);
     }
 
 }

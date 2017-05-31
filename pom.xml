@@ -41,6 +41,7 @@
 
 	<modules>
 		<module>core</module>
+		<module>console</module>
 		<module>persistence</module>
 		<module>webapp</module>
 		<module>service</module>
@@ -247,6 +248,12 @@
 				<version>${hikari.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.5.0</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -254,6 +261,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -281,7 +294,7 @@
 				<artifactId>gatling-maven-plugin</artifactId>
 				<version>${gatlin-plugin.version}</version>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>

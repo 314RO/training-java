@@ -46,7 +46,6 @@ public class ProjectConfig {
             config.setPassword(passwd);
 
             config.setMaximumPoolSize(10);
-            config.setAutoCommit(false);
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

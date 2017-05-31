@@ -24,13 +24,13 @@ import com.excilys.training.validator.ValidatorWeb;
 @RequestMapping("/editComputer")
 public class EditController {
     @Autowired
-    ComputerService computerServiceImp;
+    private ComputerService computerServiceImp;
     @Autowired
-    CompanyService companyServiceImp;
+    private CompanyService companyServiceImp;
     @Autowired
-    MapperCompany mapperCompany;
+    private  MapperCompany mapperCompany;
     @Autowired
-    MapperComputer mapperComputer;
+    private MapperComputer mapperComputer;
 
     @RequestMapping(method = RequestMethod.GET)
     public String add(ModelMap model, @RequestParam(value = "id") Long id) {
