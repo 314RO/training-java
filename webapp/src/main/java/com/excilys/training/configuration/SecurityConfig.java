@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      
         http.logout()                                                             
         .logoutUrl("/dashboard?logout")                                                
-        .logoutSuccessUrl("/dashboard?logout")  // valeur par défaut                                
+        .logoutSuccessUrl("/dashboard?logout")                                
         .invalidateHttpSession(true) // par défaut
         .clearAuthentication(true).deleteCookies("JSESSIONID");
         

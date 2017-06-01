@@ -2,9 +2,6 @@ package com.excilys.training.configuration;
 
 import java.util.Locale;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,9 +24,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.excilys.training")
 @Import({ SecurityConfig.class })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
-    
-    @Autowired
-    private DataSource datasource;
     
     @Bean
     public InternalResourceViewResolver viewResolver() {
